@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: Montserrat;
+  color: white;
+  background-color: black;
+}
+
+input,
+textarea {
+  margin-top: 0%;
+  width: 100%;
+  border: none;
+  background-color: black;
+  color: #bfc500;
+  padding: 0;
+  padding-bottom: calc(10px / 2);
+  font-weight: 400;
+  font-size: 0.8em;
+  font-style: italic;
+  border-bottom: 1px solid #bfc500;
+}
+
+input:disabled {
+  color: gainsboro;
+  border-bottom: 1px solid gainsboro;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-display: swap;
+  src: url(/fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Italic-VariableFont_wght.ttf);
+}
