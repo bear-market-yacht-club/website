@@ -1,1 +1,1 @@
-release: prisma migrate deploy
+web: prisma migrate deploy
