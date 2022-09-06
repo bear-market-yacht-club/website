@@ -14,11 +14,11 @@ const RSVP: NextPage = () => {
 
   return (
     <Layout>
-      <div className="w-1/2">
-        <Heading>Check your invite status</Heading>
+      <Heading>Check your invite status</Heading>
+      <div className="text-yellow w-1/2">
         <p>Twitter Username</p>
         <div className="flex">
-          <span className="text-yellow">@</span>
+          <span className="">@</span>
           <input
             className="text-lg"
             type="text"

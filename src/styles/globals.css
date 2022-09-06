@@ -23,6 +23,11 @@ textarea {
   border-bottom: 1px solid #bfc500;
 }
 
+input:focus-visible,
+textarea:focus-visible {
+  outline: none;
+}
+
 input:disabled {
   color: gainsboro;
   border-bottom: 1px solid gainsboro;

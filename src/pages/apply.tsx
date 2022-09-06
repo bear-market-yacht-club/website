@@ -59,22 +59,20 @@ const Apply: NextPage = () => {
             </div>
             <div>
               <p>Twitter handle</p>
-              <input
-                {...register("twitterHandle")}
-                type="text"
-                placeholder="@"
-              />
+              <div className="flex items-center">
+                <span className="text-yellow text-sm">@</span>
+                <input {...register("twitterHandle")} type="text" />
+              </div>
               <p className="text-red-500 text-base">
                 {errors.twitterHandle && "Required"}
               </p>
             </div>
             <div>
               <p>Discord handle</p>
-              <input
-                {...register("discordHandle")}
-                type="text"
-                placeholder="@"
-              />
+              <div className="flex items-center">
+                <span className="text-yellow text-sm">@</span>
+                <input {...register("discordHandle")} type="text" />
+              </div>
               <p className="text-red-500 text-base">
                 {errors.discordHandle && "Required"}
               </p>
