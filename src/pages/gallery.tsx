@@ -11,8 +11,8 @@ import { wrap } from "../utils/wrap";
 const Mint: NextPage = () => {
   return (
     <Layout>
-      <Heading>Mint</Heading>
-      <p>Will be live after whitelist period</p>
+      <Heading>Gallery</Heading>
+      <p>Will be live after mint</p>
     </Layout>
   );
 };

@@ -1,12 +1,13 @@
-import { FC, ReactNode } from "react";
+import { FC, HTMLAttributes } from "react";
 
-interface Props {
-  children: ReactNode;
-}
-
-const Heading: FC<Props> = ({ children }) => {
+const Heading: FC<HTMLAttributes<HTMLHeadingElement>> = (props) => {
   return (
-    <h1 className="font-black text-3xl italic uppercase mb-8">{children}</h1>
+    <h1
+      {...props}
+      className={`font-black text-3xl italic uppercase mb-8 ${props.className}`}
+    >
+      {props.children}
+    </h1>
   );
 };
 

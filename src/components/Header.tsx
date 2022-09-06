@@ -8,9 +8,9 @@ const links: {
   href: string;
   src: string;
 }[] = [
-  { href: "https://www.discord.com/bmyc", src: "discord.svg" },
-  { href: "https://www.twitter.com/bmyc", src: "twitter.svg" },
-  { href: "https://www.opensea.io/bmyc", src: "opensea.svg" },
+  { href: "https://www.discord.gg/28x4ysCtXW", src: "discord.svg" },
+  { href: "https://www.twitter.com/bearmarketyc", src: "twitter.svg" },
+  // { href: "https://www.opensea.io/bearmarketyc", src: "opensea.svg" },
 ];
 
 const Header: FC = ({}) => {

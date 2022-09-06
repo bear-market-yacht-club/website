@@ -1,13 +1,13 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, HTMLAttributes } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 
-const Layout: FC<PropsWithChildren> = ({ children }) => {
+const Layout: FC<HTMLAttributes<HTMLDivElement>> = (props) => {
   return (
-    <div className="transition-all">
+    <div {...props} className={`transition-all ${props.className}`}>
       <Header />
       <main className="container mx-auto max-w-10xl flex flex-col m-4 p-4 text-white bg-black">
-        {children}
+        {props.children}
       </main>
       {/* <Footer /> */}
     </div>

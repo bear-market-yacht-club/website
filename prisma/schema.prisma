@@ -16,11 +16,11 @@ datasource db {
 
 model ApplicationForm {
     id                  String @id @default(cuid())
-    howWillYouHelp      String
-    longTerm            String
-    twitterHandle       String @unique
-    discordHandle       String @unique
-    ethAddress          String @unique
+    howWillYouHelp      String @db.Text
+    longTerm            String @db.Text
+    twitterHandle       String @unique @db.Text
+    discordHandle       String @unique @db.Text
+    ethAddress          String @unique @db.Text
 }
 
 // model Example {

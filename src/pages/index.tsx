@@ -13,10 +13,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
+      <Layout className="text-center">
         <Heading>Welcome to the Bear Market Yacht Club</Heading>
-        <p>We provide the bear necessities during the bear market</p>
-        <Button href="/mint">Mint!</Button>
+        <p className="mb-8">This website may be bare, but its a bear market.</p>
+        <Button href="/apply">Apply</Button>
       </Layout>
     </>
   );
