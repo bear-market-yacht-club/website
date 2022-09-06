@@ -12,7 +12,7 @@ const Gallery: NextPage = () => {
   return (
     <Layout>
       <Heading>Gallery</Heading>
-      <p className="mb-8">Bear with us.</p>
+      <p className="mb-9">Bear with us.</p>
       <p>Will be live after mint.</p>
     </Layout>
   );

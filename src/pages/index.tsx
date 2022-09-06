@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       <p className="mb-8">
         An exclusive club of 5555 unique bears sailing through Ethereum.
       </p>
-      <div className="mx-auto w-[400px] h-[400px] relative">
+      <div className="mx-auto w-[300px] h-[300px] lg:w-[400px] lg:h-[400px] relative">
         <div className="absolute w-full h-full glow"></div>
         <img
           src="/images/logo-black.svg"
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       </div>
       <Button
         href="/apply"
-        className="animate-[wiggle_1s_linear_infinite] glow-on-hover"
+        className="animate-[wiggle_3s_linear_infinite] glow-on-hover"
       >
         Apply
       </Button>

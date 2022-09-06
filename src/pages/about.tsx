@@ -21,7 +21,7 @@ const About: NextPage = () => {
           <tr>Whitelist</tr>
         </td>
         <td>
-          <tr>55555</tr>
+          <tr>5555</tr>
           <tr>Ethereum</tr>
           <tr>FREE!</tr>
           <tr>TBD</tr>

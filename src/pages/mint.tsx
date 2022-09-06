@@ -13,7 +13,7 @@ const Mint: NextPage = () => {
     <Layout>
       <Heading>Mint</Heading>
       <p className="mb-8">This website may be bare, but its a bear market.</p>
-      <p>Will be live after whitelist period.</p>
+      <p>Will be live after invite period.</p>
     </Layout>
   );
 };

@@ -26,3 +26,8 @@ model ApplicationForm {
 model AcceptedTwitterAccounts {
     twitterHandle       String @id
 }
+
+model TrackCheckStatus {
+    id                  String @id @default(cuid())
+    checkedTwitterHandle String
+}
