@@ -11,3 +11,7 @@ export const applyValidator = z.object({
 export const getApplicationValidator = z.object({
   ethAddress: z.string().startsWith("0x").length(42),
 });
+
+export const getByTwitterValidator = z.object({
+  twitterHandle: z.string().min(1),
+});

@@ -2,6 +2,7 @@ import { createRouter } from "./context";
 import {
   applyValidator,
   getApplicationValidator,
+  getByTwitterValidator,
 } from "../../types/validators";
 
 export const apply = createRouter()
@@ -18,5 +19,16 @@ export const apply = createRouter()
       return await ctx.prisma.applicationForm.findUnique({
         where: { ethAddress: input.ethAddress },
       });
+    },
+  })
+  .query("getByTwitter", {
+    input: getByTwitterValidator,
+    async resolve({ input, ctx }) {
+      const find = await ctx.prisma.applicationForm.findUnique({
+        where: {
+          twitterHandle: input.twitterHandle,
+        },
+      });
+      return find?.twitterHandle;
     },
   });
