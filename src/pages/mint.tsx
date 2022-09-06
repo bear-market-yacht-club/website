@@ -12,7 +12,8 @@ const Mint: NextPage = () => {
   return (
     <Layout>
       <Heading>Mint</Heading>
-      <p>Will be live after whitelist period</p>
+      <p className="mb-8">This website may be bare, but its a bear market.</p>
+      <p>Will be live after whitelist period.</p>
     </Layout>
   );
 };

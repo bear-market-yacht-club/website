@@ -8,13 +8,14 @@ import Layout from "../components/Layout";
 import { useContractMethod, useMint } from "../hooks";
 import { wrap } from "../utils/wrap";
 
-const Mint: NextPage = () => {
+const Gallery: NextPage = () => {
   return (
     <Layout>
       <Heading>Gallery</Heading>
-      <p>Will be live after mint</p>
+      <p className="mb-8">Bear with us.</p>
+      <p>Will be live after mint.</p>
     </Layout>
   );
 };
 
-export default Mint;
+export default Gallery;

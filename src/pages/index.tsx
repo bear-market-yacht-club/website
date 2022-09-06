@@ -1,24 +1,30 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 
 const Home: NextPage = () => {
   return (
-    <>
-      <Head>
-        <title>BMYC</title>
-        <meta name="description" content="Bear Market Yacht Club" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <Layout className="text-center">
-        <Heading>Welcome to the Bear Market Yacht Club</Heading>
-        <p className="mb-8">This website may be bare, but its a bear market.</p>
-        <Button href="/apply">Apply</Button>
-      </Layout>
-    </>
+    <Layout className="text-center">
+      <Heading>Welcome to the Bear Market Yacht Club</Heading>
+      <p className="mb-8">
+        An exclusive club of 5555 unique bears sailing through Ethereum.
+      </p>
+      <div className="mx-auto w-[400px] h-[400px] relative">
+        <div className="absolute w-full h-full glow"></div>
+        <img
+          src="/images/logo-black.svg"
+          className="absolute w-full h-full"
+          alt="BMYC logo"
+        />
+      </div>
+      <Button
+        href="/apply"
+        className="animate-[wiggle_1s_linear_infinite] glow-on-hover"
+      >
+        Apply
+      </Button>
+    </Layout>
   );
 };
 

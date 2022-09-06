@@ -23,11 +23,17 @@ const Header: FC = ({}) => {
         <div className="w-full flex flex-wrap lg:flex-nowrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:items-center">
             <Link href="/">
-              <img
-                className="max-w-[201px] cursor-pointer mr-8"
-                src="/logo-full.png"
-                alt="bmyc logo with bear skull"
-              />
+              {router.pathname === "/" ? (
+                <span className="font-black italic text-3xl tracking-[.2em]">
+                  BMYC
+                </span>
+              ) : (
+                <img
+                  className="max-w-[201px] cursor-pointer mr-8"
+                  src="/images/logo-full.png"
+                  alt="bmyc logo with bear skull"
+                />
+              )}
             </Link>
             <button
               className="text-white cursor-pointer text-xl leading-none block lg:hidden outline-none focus:outline-none"
@@ -55,6 +61,7 @@ const Header: FC = ({}) => {
                   { title: "Apply", route: "/apply" },
                   { title: "Mint", route: "/mint" },
                   { title: "Gallery", route: "/gallery" },
+                  { title: "About", route: "/about" },
                 ].map((page) => (
                   <li
                     key={page.route}
