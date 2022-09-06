@@ -24,7 +24,7 @@ export const apply = createRouter()
   .query("getByTwitter", {
     input: getByTwitterValidator,
     async resolve({ input, ctx }) {
-      const find = await ctx.prisma.applicationForm.findUnique({
+      const find = await ctx.prisma.acceptedTwitterAccounts.findUnique({
         where: {
           twitterHandle: input.twitterHandle,
         },
