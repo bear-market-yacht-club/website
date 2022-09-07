@@ -28,27 +28,27 @@ const About: NextPage = () => {
         </td>
       </table>
       <Heading>Our Team</Heading>
-      <div className="flex flex-wrap font-bold lg:w-1/2 mb-8 gap-4 items-center">
-        <div className="flex flex-col items-center">
+      <div className="grid grid-cols-2 content-start lg:w-1/2 font-bold mb-8 gap-4">
+        <div className="flex flex-col items-center justify-center">
           <p className="card">
             <span>?</span>
           </p>
           <p>@web3buidler</p>
-          <p>Dev/Buidler in Chief</p>
+          <p className="text-xs">Dev/Buidler in Chief</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
             <span>?</span>
           </p>
           <p>@cryptiddarkarts</p>
-          <p>Dev/Secret Weapon</p>
+          <p className="text-xs">Dev/Secret Weapon</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
             <span>?</span>
           </p>
           <p>@memepool</p>
-          <p>Chief Conspiracy Theorist</p>
+          <p className="text-xs">Chief Conspiracy Theorist</p>
         </div>
       </div>
     </Layout>
