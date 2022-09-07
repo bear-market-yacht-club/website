@@ -12,7 +12,7 @@ const Mint: NextPage = () => {
   return (
     <Layout>
       <Heading>Mint</Heading>
-      <p className="mb-8">This website may be bare, but its a bear market.</p>
+      <p className="mb-8">This may be a bare website, but its a bear market.</p>
       <p>Will be live after invite period.</p>
     </Layout>
   );

@@ -7,9 +7,8 @@ const About: NextPage = () => {
     <Layout>
       <Heading>Our Mission</Heading>
       <p className="mb-8">
-        We will unify the people who are still here in the bear market, creating
-        a solid web3 family that has fun, and will thrive and support each other
-        in both good and bad times.
+        We will unify as a web3 family in the bear market, having fun and
+        supporting each other in both good and bad times.
       </p>
       <Heading>Mint Info</Heading>
       <table className="lg:w-1/2 mb-8">
@@ -34,19 +33,22 @@ const About: NextPage = () => {
           <p className="card">
             <span>?</span>
           </p>
-          <p>buidler</p>
+          <p>@web3buidler</p>
+          <p>Dev/Buidler in Chief</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
             <span>?</span>
           </p>
-          <p>cryptid</p>
+          <p>@cryptiddarkarts</p>
+          <p>Dev/Secret Weapon</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
             <span>?</span>
           </p>
-          <p>memepool</p>
+          <p>@memepool</p>
+          <p>Chief Conspiracy Theorist</p>
         </div>
       </div>
     </Layout>
