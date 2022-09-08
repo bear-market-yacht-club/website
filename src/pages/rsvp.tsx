@@ -39,7 +39,9 @@ const RSVP: NextPage = () => {
             className="text-lg"
             type="text"
             value={twitterHandle}
-            onChange={(value) => setTwitterHandle(value.target.value)}
+            onChange={(value) =>
+              setTwitterHandle(value.target.value.replace(/^@+/, ""))
+            }
           />
         </div>
         <div className="mt-8">
