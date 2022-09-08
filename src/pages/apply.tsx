@@ -32,6 +32,7 @@ const Apply: NextPage = () => {
 
   const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
     //send to server
+    data.twitterHandle = data.twitterHandle.replace(/^@+/, "");
     applyMutation(data);
   };
 
@@ -41,7 +42,10 @@ const Apply: NextPage = () => {
         {isSuccess || alreadyApplied ? (
           "Your application has been received and is being reviewed. You'll be notified if you're accepted."
         ) : (
-          <form className="space-y-8 lg:w-1/2" onSubmit={handleSubmit(onSubmit)}>
+          <form
+            className="space-y-8 lg:w-1/2"
+            onSubmit={handleSubmit(onSubmit)}
+          >
             <Heading className="text-white">Membership Application</Heading>
             <div>
               <p>How will you benefit the community?</p>

@@ -5,7 +5,12 @@ export const tracking = createRouter().mutation("rsvpTrack", {
   input: rsvpTrack,
   async resolve({ input, ctx }) {
     await ctx.prisma.trackCheckStatus.create({
-      data: { checkedTwitterHandle: input.twitterHandle.toLowerCase().trim() },
+      data: {
+        checkedTwitterHandle: input.twitterHandle
+          .toLowerCase()
+          .replace(/^@+/, "")
+          .trim(),
+      },
     });
   },
 });
