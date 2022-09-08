@@ -30,4 +30,5 @@ model AcceptedTwitterAccounts {
 model TrackCheckStatus {
     id                  String @id @default(cuid())
     checkedTwitterHandle String
+    dateTime            DateTime @default(now())
 }

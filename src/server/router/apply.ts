@@ -26,7 +26,7 @@ export const apply = createRouter()
     async resolve({ input, ctx }) {
       const find = await ctx.prisma.acceptedTwitterAccounts.findUnique({
         where: {
-          twitterHandle: input.twitterHandle.toLowerCase(),
+          twitterHandle: input.twitterHandle.toLowerCase().trim(),
         },
       });
       return find?.twitterHandle;
