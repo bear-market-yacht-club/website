@@ -48,7 +48,9 @@ const RSVP: NextPage = () => {
           {checking === 0 ? (
             <Button
               onClick={() => {
-                applyMutation({ twitterHandle });
+                applyMutation({
+                  twitterHandle: twitterHandle.toLowerCase().trim(),
+                });
                 setChecking(1);
               }}
             >

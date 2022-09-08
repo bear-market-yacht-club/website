@@ -24,9 +24,12 @@ export const apply = createRouter()
   .query("getByTwitter", {
     input: getByTwitterValidator,
     async resolve({ input, ctx }) {
-      const find = await ctx.prisma.acceptedTwitterAccounts.findUnique({
+      const find = await ctx.prisma.acceptedTwitterAccounts.findFirst({
         where: {
-          twitterHandle: input.twitterHandle.toLowerCase().trim(),
+          twitterHandle: {
+            equals: input.twitterHandle.toLowerCase().trim(),
+            mode: "insensitive",
+          },
         },
       });
       return find?.twitterHandle;
