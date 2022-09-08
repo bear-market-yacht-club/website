@@ -13,9 +13,9 @@ export const getApplicationValidator = z.object({
 });
 
 export const rsvpTrack = z.object({
-  twitterHandle: z.string().min(1),
+  twitterHandle: z.string().trim().min(1),
 });
 
 export const getByTwitterValidator = z.object({
-  twitterHandle: z.string().min(1),
+  twitterHandle: z.string().trim().min(1),
 });
