@@ -48,7 +48,7 @@ const About: NextPage = () => {
             <span>?</span>
           </p>
           <p>@memepool</p>
-          <p className="text-xs">Chief Conspiracy Theorist</p>
+          <p className="text-xs">Conspiracy Theorist</p>
         </div>
       </div>
     </Layout>
