@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "AcceptedTwitterAccounts" ADD COLUMN     "inviteSent" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

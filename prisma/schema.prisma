@@ -25,6 +25,7 @@ model ApplicationForm {
 
 model AcceptedTwitterAccounts {
     twitterHandle       String @id
+    inviteSent          DateTime?
 }
 
 model TrackCheckStatus {
