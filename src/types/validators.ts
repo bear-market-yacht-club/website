@@ -8,7 +8,7 @@ export const applyValidator = z.object({
   ethAddress: z.string().trim().startsWith("0x").length(42),
 });
 
-export const getApplicationValidator = z.object({
+export const ethAddressValidator = z.object({
   ethAddress: z.string().startsWith("0x").length(42),
 });
 

@@ -1,6 +1,6 @@
 import { useEthers } from "@usedapp/core";
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
@@ -12,6 +12,10 @@ import { ApplicationForm } from "@prisma/client";
 
 const Apply: NextPage = () => {
   const { account } = useEthers();
+  const { data: accepted } = trpc.useQuery([
+    "form.getByEthereum",
+    { ethAddress: account || "" },
+  ]);
   const { data: alreadyApplied } = trpc.useQuery([
     "form.getApplication",
     { ethAddress: account || "" },
@@ -27,19 +31,31 @@ const Apply: NextPage = () => {
   });
 
   useEffect(() => {
-    if (account) setValue("ethAddress", account);
+    if (account) {
+      setValue("ethAddress", account);
+    }
   }, [account, setValue]);
 
-  const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
-    //send to server
-    data.twitterHandle = data.twitterHandle.replace(/^@+/, "");
-    applyMutation(data);
-  };
+  const onSubmit: SubmitHandler<ApplicationForm> = useCallback(
+    (data) => {
+      //send to server
+      data.twitterHandle = data.twitterHandle.replace(/^@+/, "");
+      applyMutation(data);
+    },
+    [applyMutation]
+  );
 
   return (
     <Layout>
       <div className="py-10 text-yellow text-xl">
-        {isSuccess || alreadyApplied ? (
+        {accepted ? (
+          <div className="">
+            <p className="mb-4">Your application has been accepted!</p>
+            <Button href="https://www.premint.xyz/bear-market-yacht-club/">
+              RSVP
+            </Button>
+          </div>
+        ) : isSuccess || alreadyApplied ? (
           "Your application has been received and is being reviewed. You'll be notified if you're accepted."
         ) : (
           <form
