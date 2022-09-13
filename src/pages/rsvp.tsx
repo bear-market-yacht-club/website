@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 import { trpc } from "../utils/trpc";
+import { Fireworks } from "../components/Fireworks";
 
 const RSVP: NextPage = () => {
   const [twitterHandle, setTwitterHandle] = useState("");
@@ -29,9 +30,9 @@ const RSVP: NextPage = () => {
   }, [checking]);
 
   return (
-    <Layout>
+    <Layout mainClassName="!bg-transparent">
       <Heading>See if you&apos;re invited</Heading>
-      <div className="text-yellow w-1/2">
+      <div className="text-yellow lg:w-1/4">
         <p>Twitter Username</p>
         <div className="flex">
           <span className="">@</span>
@@ -103,6 +104,7 @@ const RSVP: NextPage = () => {
           )}
         </div>
       </div>
+      {checking === 2 && <Fireworks />}
     </Layout>
   );
 };

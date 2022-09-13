@@ -9,6 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { applyValidator } from "../types/validators";
 import { ApplicationForm } from "@prisma/client";
+import { Fireworks } from "../components/Fireworks";
 
 const Apply: NextPage = () => {
   const { account } = useEthers();
@@ -46,7 +47,7 @@ const Apply: NextPage = () => {
   );
 
   return (
-    <Layout>
+    <Layout mainClassName="!bg-transparent">
       <div className="py-10 text-yellow text-xl">
         {accepted ? (
           <div className="">
@@ -54,6 +55,7 @@ const Apply: NextPage = () => {
             <Button href="https://www.premint.xyz/bear-market-yacht-club/">
               RSVP
             </Button>
+            <Fireworks />
           </div>
         ) : isSuccess || alreadyApplied ? (
           "Your application has been received and is being reviewed. You'll be notified if you're accepted."
@@ -81,7 +83,11 @@ const Apply: NextPage = () => {
               <p>Twitter handle</p>
               <div className="flex items-center">
                 <span className="text-yellow text-sm">@</span>
-                <input {...register("twitterHandle")} type="text" />
+                <input
+                  {...register("twitterHandle")}
+                  className="text-lg"
+                  type="text"
+                />
               </div>
               <p className="text-red-500 text-base">
                 {errors.twitterHandle && "Required"}
