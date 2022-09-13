@@ -104,7 +104,7 @@ const RSVP: NextPage = () => {
           )}
         </div>
       </div>
-      {checking === 2 && <Fireworks />}
+      {/* {checking === 2 && <Fireworks />} */}
     </Layout>
   );
 };

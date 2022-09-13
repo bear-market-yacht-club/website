@@ -55,7 +55,7 @@ const Apply: NextPage = () => {
             <Button href="https://www.premint.xyz/bear-market-yacht-club/">
               RSVP
             </Button>
-            <Fireworks />
+            {/* <Fireworks /> */}
           </div>
         ) : isSuccess || alreadyApplied ? (
           "Your application has been received and is being reviewed. You'll be notified if you're accepted."

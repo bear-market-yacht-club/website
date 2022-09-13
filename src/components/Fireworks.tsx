@@ -127,7 +127,7 @@ export const Fireworks = () => {
         backgroundMode: { zIndex: -1 },
         background: { color: "#000", opacity: 0 },
         detectRetina: true,
-        fpsLimit: 121,
+        fpsLimit: 120,
         emitters: {
           direction: "top",
           life: {
