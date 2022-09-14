@@ -21,7 +21,7 @@ const team: { username: string; description: string }[] = [
   },
   {
     username: "juda_eth",
-    description: "Vibes Commodore",
+    description: "Vibes Officer",
   },
   {
     username: "0xBIGBAD",
