@@ -2,59 +2,83 @@ import type { NextPage } from "next";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 
+const team: { username: string; description: string }[] = [
+  {
+    username: "web3buidler",
+    description: "Dev / Buidler in Chief",
+  },
+  {
+    username: "cryptiddarkarts",
+    description: "Dev / Secret Weapon",
+  },
+  {
+    username: "memepool",
+    description: "Conspiracy Theorist",
+  },
+  {
+    username: "pugngmi",
+    description: "Comms Guru",
+  },
+  {
+    username: "juda_eth",
+    description: "Comms Guru",
+  },
+  {
+    username: "0xBIGBAD",
+    description: "Memeologist",
+  },
+];
+
 const About: NextPage = () => {
   return (
     <Layout>
       <Heading>Our Mission</Heading>
-      <p className="mb-8">
-        We will unify as a web3 family in the bear market, having fun and
-        supporting each other in both good and bad times.
-      </p>
-      <Heading>Mint Info</Heading>
-      <table className="lg:w-1/2 mb-8">
-        <td className="font-bold text-yellow">
-          <tr>Supply</tr>
-          <tr>Network</tr>
-          <tr>Mint Price</tr>
-          <tr>Mint Date</tr>
-          <tr>Whitelist</tr>
-        </td>
-        <td>
-          <tr>5555</tr>
-          <tr>Ethereum</tr>
-          <tr>FREE!</tr>
-          <tr>TBD</tr>
-          <tr>Invite Only</tr>
-        </td>
-      </table>
-      <Heading>Our Team</Heading>
-      <div className="grid grid-cols-2 content-start lg:w-1/2 font-bold mb-8 gap-4">
-        <div className="flex flex-col items-center justify-center">
-          <p className="card">
-            <div className="mx-auto w-[100px] h-[100px] relative">
-              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
+      <div className="lg:w-1/2">
+        <p className="mb-8">
+          We will unify as a web3 family in the bear market, having fun and
+          supporting each other in both good and bad times.
+        </p>
+        <Heading>Mint Info</Heading>
+        <table className="lg:w-1/2 mb-8">
+          <td className="font-bold text-yellow">
+            <tr>Supply</tr>
+            <tr>Network</tr>
+            <tr>Mint Price</tr>
+            <tr>Mint Date</tr>
+            <tr>Whitelist</tr>
+          </td>
+          <td>
+            <tr>5555</tr>
+            <tr>Ethereum</tr>
+            <tr>FREE!</tr>
+            <tr>TBD</tr>
+            <tr>Invite Only</tr>
+          </td>
+        </table>
+        <Heading>Crew Members</Heading>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 auto-cols-max content-start lg:w-max font-bold mb-7 gap-4">
+          {team.map((member, i) => (
+            <div key={i} className="flex flex-col items-center justify-start">
+              <p className="card">
+                <div className="mx-auto w-[100px] h-[100px] relative">
+                  <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
+                </div>
+              </p>
+              <p>@{member.username}</p>
+              <p className="text-xs">{member.description}</p>
             </div>
-          </p>
-          <p>@web3buidler</p>
-          <p className="text-xs">Dev/Buidler in Chief</p>
+          ))}
         </div>
-        <div className="flex flex-col items-center">
-          <p className="card">
-            <div className="mx-auto w-[100px] h-[100px] relative">
-              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
-            </div>
-          </p>
-          <p>@cryptiddarkarts</p>
-          <p className="text-xs">Dev/Secret Weapon</p>
-        </div>
-        <div className="flex flex-col items-center">
-          <p className="card">
-            <div className="mx-auto w-[100px] h-[100px] relative">
-              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
-            </div>
-          </p>
-          <p>@memepool</p>
-          <p className="text-xs">Conspiracy Theorist</p>
+        <Heading>Club Rules</Heading>
+        <div>
+          <ol className="list-decimal list-inside text-yellow">
+            <li>
+              <span className="text-white">Be nice</span>
+            </li>
+            <li>
+              <span className="text-white">Don&apos;t be an asshole</span>
+            </li>
+          </ol>
         </div>
       </div>
     </Layout>
