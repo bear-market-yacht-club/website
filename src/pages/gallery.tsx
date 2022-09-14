@@ -1,88 +1,88 @@
-import Button from "../components/Button";
+// import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 
 import { NextPage } from "next";
 
-const filters = {
-  id: 0,
-  background: [
-    "Tan #5",
-    "Purple #1",
-    "Blue #4",
-    "White #1",
-    "Orange #1",
-    "LightBlue #1",
-  ],
-  base: ["Penguin#1"],
-  colors: ["Purple #1", "Blue #1", "Red #1", "Turqoise #1"],
-  mustaches: [
-    "Light Blue Mustache #2",
-    "Green Twirl Mustache #1",
-    "Bushy Mustache #14",
-    "Blue Mustache #3",
-    "Twirl Mustache #15",
-  ],
-  ice_cream: [
-    "Flavor Tower #2",
-    "Choco Cone #5",
-    "Sundae #3",
-    "Choco Bit #9",
-    "Pink Sprinkles #12",
-    "Triple Cone #13",
-    "Cream Cookies #9",
-    "Blue Dip #4",
-    "Swirl #1",
-    "Choco bit #10",
-    "Strawberry #2",
-    "Sundae #2",
-    "Mint Chip #7",
-    "Red Swirls # 4",
-  ],
-  hats: [
-    "PinkCap#14",
-    "SantaHat #10",
-    "CatBeanie #17",
-    "StripedBrim #7",
-    "WitchHat#8",
-    "PinkCap#15",
-    "Bowler #5",
-    "RedCap #3",
-    "RedBrim # 19",
-    "RedBrim #9",
-    "BlackCap #19",
-    "Red Beanie #22",
-    "CowboyHat#15",
-  ],
-  tattoos: ["#2", "#11", "#4", "#10", "#9", "#8", "#1", "#3", "#7", "#5", "#6"],
-  cookies: [
-    "Cupcake #7",
-    "Pink Sprinkles #2",
-    "Candy Cane #24",
-    "Choco Chip #54",
-    "Ginger Man #3",
-    "Tree #24",
-    "Cookies #14",
-    "Jelly Donuts #30",
-  ],
-  accessories: [
-    "Red Headphones #14",
-    "Weed #1",
-    "Yellow Glasses #12",
-    "Blue Glasses #8",
-    "Red Glasses #6",
-    "Green Headphones #10",
-    "Red Glasses #5",
-    "Smoke #2",
-    "Monocle #1",
-    "Green Glasses #5",
-    "Black Glasses #20",
-    "Purple Glasses #4",
-    "Pink Headphones #9",
-  ],
-};
+// const filters = {
+//   id: 0,
+//   background: [
+//     "Tan #5",
+//     "Purple #1",
+//     "Blue #4",
+//     "White #1",
+//     "Orange #1",
+//     "LightBlue #1",
+//   ],
+//   base: ["Penguin#1"],
+//   colors: ["Purple #1", "Blue #1", "Red #1", "Turqoise #1"],
+//   mustaches: [
+//     "Light Blue Mustache #2",
+//     "Green Twirl Mustache #1",
+//     "Bushy Mustache #14",
+//     "Blue Mustache #3",
+//     "Twirl Mustache #15",
+//   ],
+//   ice_cream: [
+//     "Flavor Tower #2",
+//     "Choco Cone #5",
+//     "Sundae #3",
+//     "Choco Bit #9",
+//     "Pink Sprinkles #12",
+//     "Triple Cone #13",
+//     "Cream Cookies #9",
+//     "Blue Dip #4",
+//     "Swirl #1",
+//     "Choco bit #10",
+//     "Strawberry #2",
+//     "Sundae #2",
+//     "Mint Chip #7",
+//     "Red Swirls # 4",
+//   ],
+//   hats: [
+//     "PinkCap#14",
+//     "SantaHat #10",
+//     "CatBeanie #17",
+//     "StripedBrim #7",
+//     "WitchHat#8",
+//     "PinkCap#15",
+//     "Bowler #5",
+//     "RedCap #3",
+//     "RedBrim # 19",
+//     "RedBrim #9",
+//     "BlackCap #19",
+//     "Red Beanie #22",
+//     "CowboyHat#15",
+//   ],
+//   tattoos: ["#2", "#11", "#4", "#10", "#9", "#8", "#1", "#3", "#7", "#5", "#6"],
+//   cookies: [
+//     "Cupcake #7",
+//     "Pink Sprinkles #2",
+//     "Candy Cane #24",
+//     "Choco Chip #54",
+//     "Ginger Man #3",
+//     "Tree #24",
+//     "Cookies #14",
+//     "Jelly Donuts #30",
+//   ],
+//   accessories: [
+//     "Red Headphones #14",
+//     "Weed #1",
+//     "Yellow Glasses #12",
+//     "Blue Glasses #8",
+//     "Red Glasses #6",
+//     "Green Headphones #10",
+//     "Red Glasses #5",
+//     "Smoke #2",
+//     "Monocle #1",
+//     "Green Glasses #5",
+//     "Black Glasses #20",
+//     "Purple Glasses #4",
+//     "Pink Headphones #9",
+//   ],
+// };
 
-const attributes: Record<string, string | number> = {};
+// const attributes: Record<string, string | number> = {};
 
 const Gallery: NextPage = () => {
   return (
@@ -103,9 +103,12 @@ const Gallery: NextPage = () => {
                   className="flex flex-col items-center justify-center"
                 >
                   <p className="border-yellow border-2 rounded-lg text-5xl flex items-center justify-center">
-                    <div className="mx-auto w-[150px] h-[150px] sm:w-[200px] sm:h-[200px] relative">
-                      <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
-                    </div>
+                    <img
+                      src="/images/bear-gallery.png"
+                      className="w-[150px] h-[150px] sm:w-[200px] sm:h-[200px]"
+                      alt="bear"
+                      aria-hidden
+                    />
                   </p>
                   <p>#{i}</p>
                 </div>
