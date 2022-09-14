@@ -5,15 +5,15 @@ import Layout from "../components/Layout";
 const team: { username: string; description: string }[] = [
   {
     username: "web3buidler",
-    description: "Dev / Buidler in Chief",
+    description: "Captain Buidler",
   },
   {
     username: "cryptiddarkarts",
-    description: "Dev / Secret Weapon",
+    description: "Secret Weapon",
   },
   {
     username: "memepool",
-    description: "Conspiracy Theorist",
+    description: "Conspirator",
   },
   {
     username: "pugngmi",
@@ -21,7 +21,7 @@ const team: { username: string; description: string }[] = [
   },
   {
     username: "juda_eth",
-    description: "Comms Guru",
+    description: "Vibes Commodore",
   },
   {
     username: "0xBIGBAD",
