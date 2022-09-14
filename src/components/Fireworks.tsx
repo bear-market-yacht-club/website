@@ -136,7 +136,7 @@ export const Fireworks = () => {
             delay: 0.1,
           },
           rate: {
-            delay: 0.15,
+            delay: 0.5,
             quantity: 1,
           },
           size: {
@@ -160,7 +160,7 @@ export const Fireworks = () => {
                 value: 0.333333,
               },
               rate: {
-                value: 100,
+                value: 50,
               },
               particles: fireworksOptions,
             },
@@ -179,7 +179,7 @@ export const Fireworks = () => {
             animation: {
               enable: true,
               sync: true,
-              speed: 90,
+              speed: 100,
               startValue: "max",
               destroy: "min",
             },
