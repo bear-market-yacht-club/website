@@ -8,11 +8,11 @@ import { trpc } from "../utils/trpc";
 const Mint: NextPage = () => {
   const totalInvites = 2000;
   const { data: inviteList } = trpc.useQuery(["premint.premintList"]);
-  const [invitesClaimed, setInvitesClaimed] = useState(25);
+  const [invitesClaimed, setInvitesClaimed] = useState(0);
 
   useEffect(() => {
     setInvitesClaimed(
-      Math.round(((inviteList?.data.length ?? 250) / totalInvites) * 100)
+      Math.round(((inviteList?.data.length ?? 0) / totalInvites) * 100)
     );
   }, [inviteList]);
 
