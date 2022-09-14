@@ -31,21 +31,27 @@ const About: NextPage = () => {
       <div className="grid grid-cols-2 content-start lg:w-1/2 font-bold mb-8 gap-4">
         <div className="flex flex-col items-center justify-center">
           <p className="card">
-            <span>?</span>
+            <div className="mx-auto w-[100px] h-[100px] relative">
+              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
+            </div>
           </p>
           <p>@web3buidler</p>
           <p className="text-xs">Dev/Buidler in Chief</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
-            <span>?</span>
+            <div className="mx-auto w-[100px] h-[100px] relative">
+              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
+            </div>
           </p>
           <p>@cryptiddarkarts</p>
           <p className="text-xs">Dev/Secret Weapon</p>
         </div>
         <div className="flex flex-col items-center">
           <p className="card">
-            <span>?</span>
+            <div className="mx-auto w-[100px] h-[100px] relative">
+              <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
+            </div>
           </p>
           <p>@memepool</p>
           <p className="text-xs">Conspiracy Theorist</p>
