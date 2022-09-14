@@ -64,19 +64,12 @@ const Apply: NextPage = () => {
             className="space-y-8 lg:w-1/2"
             onSubmit={handleSubmit(onSubmit)}
           >
-            <Heading className="text-white">Membership Application</Heading>
+            <Heading className="text-white">Board the Yacht</Heading>
             <div>
-              <p>How will you benefit the community?</p>
-              <textarea {...register("howWillYouHelp")} />
+              <p>Why do you want to join our community?</p>
+              <textarea {...register("whyDoYouWantToJoin")} />
               <p className="text-red-500 text-base">
-                {errors.howWillYouHelp && "Not long enough"}
-              </p>
-            </div>
-            <div>
-              <p>Why will you hodl for the long term?</p>
-              <textarea {...register("longTerm")} />
-              <p className="text-red-500 text-base">
-                {errors.longTerm && "Not long enough"}
+                {errors.whyDoYouWantToJoin && "Not long enough"}
               </p>
             </div>
             <div>

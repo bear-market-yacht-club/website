@@ -16,8 +16,9 @@ datasource db {
 
 model ApplicationForm {
     id                  String @id @default(cuid())
-    howWillYouHelp      String @db.Text
-    longTerm            String @db.Text
+    howWillYouHelp      String? @db.Text
+    longTerm            String? @db.Text
+    whyDoYouWantToJoin  String? @db.Text
     twitterHandle       String @unique @db.Text
     discordHandle       String @unique @db.Text
     ethAddress          String @unique @db.Text

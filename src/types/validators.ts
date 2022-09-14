@@ -1,8 +1,7 @@
 import { z } from "zod";
 
 export const applyValidator = z.object({
-  howWillYouHelp: z.string().trim().min(10),
-  longTerm: z.string().trim().min(10),
+  whyDoYouWantToJoin: z.string().trim().min(10).nullable(),
   twitterHandle: z.string().trim().min(1),
   discordHandle: z.string().trim().min(1),
   ethAddress: z.string().trim().startsWith("0x").length(42),
