@@ -12,24 +12,25 @@ import { ApplicationForm } from "@prisma/client";
 import { Fireworks } from "../components/Fireworks";
 
 const Apply: NextPage = () => {
-  const { account } = useEthers();
-  const { data: accepted } = trpc.useQuery([
-    "form.getByEthereum",
-    { ethAddress: account || "" },
-  ]);
-  const { data: alreadyApplied } = trpc.useQuery([
-    "form.getApplication",
-    { ethAddress: account || "" },
-  ]);
-  const { mutate: applyMutation, isSuccess } = trpc.useMutation("form.apply");
   const {
     register,
     handleSubmit,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<ApplicationForm>({
     resolver: zodResolver(applyValidator),
   });
+  const { activateBrowserWallet, account } = useEthers();
+  const { data: accepted } = trpc.useQuery([
+    "form.getByEthereum",
+    { ethAddress: account, twitterHandle: getValues().twitterHandle },
+  ]);
+  const { data: alreadyApplied } = trpc.useQuery([
+    "form.getApplication",
+    { ethAddress: account, twitterHandle: getValues().twitterHandle },
+  ]);
+  const { mutate: applyMutation, isSuccess } = trpc.useMutation("form.apply");
 
   useEffect(() => {
     if (account) {
@@ -41,7 +42,9 @@ const Apply: NextPage = () => {
     (data) => {
       //send to server
       data.twitterHandle = data.twitterHandle.replace(/^@+/, "");
-      applyMutation(data);
+      applyMutation(
+        data as ApplicationForm & { ethAddress: string | undefined }
+      );
     },
     [applyMutation]
   );
@@ -97,16 +100,25 @@ const Apply: NextPage = () => {
               </p>
             </div>
             <div>
-              <p className="text-gray-400">Eth Address</p>
-              <input
-                disabled
-                type="text"
-                {...register("ethAddress")}
-                placeholder={"Sign in with metamask"}
-              />
-              <p className="text-red-500 text-base">
-                {errors.ethAddress && "Required"}
-              </p>
+              <p className="text-gray-400">Eth Address (recommended)</p>
+              {account ? (
+                <>
+                  <input
+                    disabled
+                    type="text"
+                    {...register("ethAddress")}
+                    placeholder={"Sign in with metamask"}
+                  />
+                </>
+              ) : (
+                <Button
+                  type="button"
+                  className="text-sm p-2 mt-2 min-w-max"
+                  onClick={activateBrowserWallet}
+                >
+                  Connect to Wallet
+                </Button>
+              )}
             </div>
             <Button>Invite Me</Button>
           </form>

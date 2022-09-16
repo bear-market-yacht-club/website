@@ -15,23 +15,24 @@ datasource db {
 }
 
 model ApplicationForm {
-    id                  String @id @default(cuid())
-    howWillYouHelp      String? @db.Text
-    longTerm            String? @db.Text
-    whyDoYouWantToJoin  String? @db.Text
-    twitterHandle       String @unique @db.Text
-    discordHandle       String @unique @db.Text
-    ethAddress          String @unique @db.Text
+    id                  String   @id @default(cuid())
+    howWillYouHelp      String?  @db.Text
+    longTerm            String?  @db.Text
+    whyDoYouWantToJoin  String?  @db.Text
+    twitterHandle       String   @unique @db.Text
+    discordHandle       String   @unique @db.Text
+    ethAddress          String?  @unique @db.Text
     dateTime            DateTime @default(now())
 }
 
 model AcceptedTwitterAccounts {
-    twitterHandle       String @id
+    twitterHandle       String    @id
     inviteSent          DateTime?
 }
 
 model TrackCheckStatus {
-    id                  String @id @default(cuid())
+    id                   String   @id @default(cuid())
     checkedTwitterHandle String
-    dateTime            DateTime @default(now())
+    dateTime             DateTime @default(now())
+}
 }

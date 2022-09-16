@@ -1,7 +1,7 @@
 import { createRouter } from "./context";
 import {
   applyValidator,
-  ethAddressValidator,
+  getApplicationValidator,
   getByTwitterValidator,
 } from "../../types/validators";
 
@@ -14,10 +14,17 @@ export const apply = createRouter()
     },
   })
   .query("getApplication", {
-    input: ethAddressValidator,
+    input: getApplicationValidator,
     async resolve({ input, ctx }) {
-      return await ctx.prisma.applicationForm.findUnique({
-        where: { ethAddress: input.ethAddress },
+      return await ctx.prisma.applicationForm.findFirst({
+        where: {
+          OR: [
+            {
+              ethAddress: input.ethAddress,
+            },
+            { twitterHandle: input.twitterHandle },
+          ],
+        },
       });
     },
   })
@@ -40,11 +47,18 @@ export const apply = createRouter()
   // 	 on ata."twitterHandle" = af."twitterHandle"
   // where af."ethAddress" = $1
   .query("getByEthereum", {
-    input: ethAddressValidator,
+    input: getApplicationValidator,
     async resolve({ input, ctx }) {
-      const applicationForm = await ctx.prisma.applicationForm.findUnique({
+      const applicationForm = await ctx.prisma.applicationForm.findFirst({
         where: {
-          ethAddress: input.ethAddress,
+          OR: [
+            {
+              ethAddress: input.ethAddress,
+            },
+            {
+              twitterHandle: input.twitterHandle,
+            },
+          ],
         },
       });
       return await ctx.prisma.acceptedTwitterAccounts.findUnique({
