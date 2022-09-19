@@ -6,7 +6,7 @@ import Layout from "../components/Layout";
 import { trpc } from "../utils/trpc";
 
 const Mint: NextPage = () => {
-  const totalInvites = 2000;
+  const totalInvites = 1000;
   const { data: inviteList } = trpc.useQuery(["premint.premintList"]);
   const [invitesClaimed, setInvitesClaimed] = useState(0);
 
