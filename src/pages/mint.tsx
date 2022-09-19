@@ -34,10 +34,10 @@ const Mint: NextPage = () => {
         </div>
         <p className="mb-4">Mint will open after invite period</p>
         <div className="flex w-[75%] lg:w-1/4 justify-between">
-          <Button href="/apply" className="p-3 text-sm">
-            Apply
-          </Button>
-          <Button href="/rsvp" className="p-3 text-sm">
+          <Button
+            href="https://www.premint.xyz/bear-market-yacht-club/"
+            className="p-3 text-sm"
+          >
             RSVP
           </Button>
         </div>
