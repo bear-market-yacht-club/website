@@ -38,19 +38,27 @@ const About: NextPage = () => {
           We will unify as a web3 family in the bear market, having fun and
           supporting each other in both good and bad times.
         </p>
+        <Heading>What is a bear?</Heading>
+        <p className="mb-8">
+          A bear is a unique ERC721 token living on the Ethereum Blockchain.
+          Your bear is your yacht club access pass, and provides access to all
+          exclusive club member areas.
+        </p>
         <Heading>Mint Info</Heading>
         <table className="lg:w-1/2 mb-8">
           <td className="font-bold text-yellow">
             <tr>Supply</tr>
             <tr>Network</tr>
-            <tr>Mint Price</tr>
+            <tr>WL Mint Price</tr>
+            <tr>Public Mint Price</tr>
             <tr>Mint Date</tr>
             <tr>Whitelist</tr>
           </td>
           <td>
             <tr>5555</tr>
             <tr>Ethereum</tr>
-            <tr>FREE!</tr>
+            <tr>Free</tr>
+            <tr>0.06 ETH</tr>
             <tr>TBD</tr>
             <tr>Invite Only</tr>
           </td>
