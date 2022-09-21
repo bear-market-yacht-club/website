@@ -2,12 +2,17 @@
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
-import { Config, DAppProvider, Mainnet, Rinkeby, Ropsten } from "@usedapp/core";
+import { Config, DAppProvider, Mainnet } from "@usedapp/core";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import Script from "next/script";
+import { useEffect } from "react";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
+import * as gtag from "../types/gtag";
 
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
@@ -20,12 +25,46 @@ const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = (url: URL) => {
+      /* invoke analytics function only for production */
+      /*if (isProduction)*/ gtag.pageview(url);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
-    <DAppProvider config={DAppConfig}>
-      <SessionProvider session={session}>
-        <Component {...pageProps} />
-      </SessionProvider>
-    </DAppProvider>
+    <>
+      <Head>
+        <title>Bear Market Yacht Club</title>
+      </Head>
+      {/* enable analytics script only for production */}
+      {/* {isProduction && ( */}
+      <Script
+        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', '${gtag.GA_TRACKING_ID}');
+        `}
+      </Script>
+      {/* )} */}
+      <DAppProvider config={DAppConfig}>
+        <SessionProvider session={session}>
+          <Component {...pageProps} />
+        </SessionProvider>
+      </DAppProvider>
+    </>
   );
 };
 
