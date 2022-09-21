@@ -21,6 +21,8 @@ const DAppConfig: Config = {
   },
 };
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
@@ -30,7 +32,7 @@ const MyApp: AppType = ({
   useEffect(() => {
     const handleRouteChange = (url: URL) => {
       /* invoke analytics function only for production */
-      /*if (isProduction)*/ gtag.pageview(url);
+      if (isProduction) gtag.pageview(url);
     };
     router.events.on("routeChangeComplete", handleRouteChange);
     return () => {
@@ -44,21 +46,23 @@ const MyApp: AppType = ({
         <title>Bear Market Yacht Club</title>
       </Head>
       {/* enable analytics script only for production */}
-      {/* {isProduction && ( */}
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
+      {isProduction && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+            strategy="afterInteractive"
+          />
+          <Script id="google-analytics" strategy="afterInteractive">
+            {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
 
           gtag('config', '${gtag.GA_TRACKING_ID}');
         `}
-      </Script>
-      {/* )} */}
+          </Script>
+        </>
+      )}
       <DAppProvider config={DAppConfig}>
         <SessionProvider session={session}>
           <Component {...pageProps} />
