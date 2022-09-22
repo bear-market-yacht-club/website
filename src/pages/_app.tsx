@@ -6,13 +6,14 @@ import { Config, DAppProvider, Mainnet } from "@usedapp/core";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import Router from "next/router";
 import Script from "next/script";
-import { useEffect } from "react";
 import superjson from "superjson";
 import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 import * as gtag from "../types/gtag";
+
+Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));
 
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
@@ -27,19 +28,6 @@ const MyApp: AppType = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
-  const router = useRouter();
-
-  useEffect(() => {
-    const handleRouteChange = (url: URL) => {
-      /* invoke analytics function only for production */
-      if (isProduction) gtag.pageview(url);
-    };
-    router.events.on("routeChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
-
   return (
     <>
       <Head>
