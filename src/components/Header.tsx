@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -11,13 +12,24 @@ const links: {
   { href: "https://www.twitter.com/bearmarketyc", src: "twitter.svg" },
   // { href: "https://www.opensea.io/bearmarketyc", src: "opensea.svg" },
 ];
-
+const pages = [
+  { title: "Flappy Bear", route: "/flap" },
+  { title: "Bemes", route: "/memes" },
+  { title: "Mint", route: "/mint" },
+  { title: "Gallery", route: "/gallery" },
+  { title: "About", route: "/about" },
+];
 const Header: FC = ({}) => {
   const router = useRouter();
   const [navbarOpen, setNavbarOpen] = useState(false);
 
   return (
     <header className="text-white bg-black p-4 relative z-10">
+      <Head>
+        <title>
+          BMYC | {pages.filter((p) => p.route === router.pathname)[0]?.title}
+        </title>
+      </Head>
       <nav className="relative flex items-center justify-between transition duration-500">
         <div className="w-full flex flex-wrap lg:flex-nowrap items-center justify-between">
           <div className="w-full relative flex justify-between lg:items-center">
@@ -55,14 +67,7 @@ const Header: FC = ({}) => {
               }
             >
               {[
-                ...[
-                  { title: "Flappy Bear", route: "/flap" },
-                  { title: "RSVP", route: "/rsvp" },
-                  { title: "Apply", route: "/apply" },
-                  { title: "Mint", route: "/mint" },
-                  { title: "Gallery", route: "/gallery" },
-                  { title: "About", route: "/about" },
-                ].map((page) => (
+                ...pages.map((page) => (
                   <li
                     key={page.route}
                     className={`${

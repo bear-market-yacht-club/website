@@ -23,7 +23,7 @@ const Home: NextPage = () => {
         href="https://www.premint.xyz/bear-market-yacht-club/"
         className="animate-[wiggle_3s_linear_infinite] glow-on-hover"
       >
-        Apply
+        Premint
       </Button>
     </Layout>
   );

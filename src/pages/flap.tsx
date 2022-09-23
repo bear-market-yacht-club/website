@@ -22,8 +22,14 @@ const FlappyBear: NextPage = () => {
   ]);
 
   useEffect(() => {
-    const th = localStorage.getItem("twitter_handle");
+    const th = localStorage
+      .getItem("twitter_handle")
+      ?.toLowerCase()
+      .trim()
+      .replace(/^@+/, "")
+      .trim();
     if (th) {
+      localStorage.setItem("twitter_handle", th);
       setTwitterHandle(th);
       setIsLoaded(true);
       if (canvas.current) {
@@ -140,7 +146,10 @@ const FlappyBear: NextPage = () => {
     e.preventDefault();
     if (nameRef.current?.value) {
       setTwitterHandle(nameRef.current.value);
-      localStorage.setItem("twitter_handle", nameRef.current.value);
+      localStorage.setItem(
+        "twitter_handle",
+        nameRef.current.value.toLowerCase().trim().replace(/^@+/, "").trim()
+      );
     }
   };
 

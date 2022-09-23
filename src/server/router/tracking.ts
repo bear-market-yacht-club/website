@@ -8,6 +8,7 @@ export const tracking = createRouter().mutation("rsvpTrack", {
       data: {
         checkedTwitterHandle: input.twitterHandle
           .toLowerCase()
+          .trim()
           .replace(/^@+/, "")
           .trim(),
       },

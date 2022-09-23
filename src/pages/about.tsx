@@ -45,22 +45,18 @@ const About: NextPage = () => {
           exclusive club member areas.
         </p>
         <Heading>Mint Info</Heading>
-        <table className="lg:w-1/2 mb-8">
+        <table className="w-full mb-8">
           <td className="font-bold text-yellow">
             <tr>Supply</tr>
             <tr>Network</tr>
-            <tr>WL Mint Price</tr>
-            <tr>Public Mint Price</tr>
+            <tr>Mint Price</tr>
             <tr>Mint Date</tr>
-            <tr>Whitelist</tr>
           </td>
           <td>
             <tr>5555</tr>
             <tr>Ethereum</tr>
-            <tr>Free</tr>
             <tr>0.06 ETH</tr>
-            <tr>TBD</tr>
-            <tr>Invite Only</tr>
+            <tr>October 26, 2022 2PM EST</tr>
           </td>
         </table>
         <Heading>Crew Members</Heading>
