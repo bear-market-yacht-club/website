@@ -41,15 +41,129 @@ input:disabled {
 @font-face {
   font-family: "Montserrat";
   font-style: normal;
+  font-weight: 100;
   font-display: swap;
-  src: url(/fonts/Montserrat-VariableFont_wght.ttf);
+  src: url(/fonts/Montserrat-Thin.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url(/fonts/Montserrat-ExtraLight.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Light.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Regular.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Medium.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/Montserrat-SemiBold.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Bold.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/Montserrat-ExtraBold.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/fonts/Montserrat-Black.ttf);
 }
 
 @font-face {
   font-family: "Montserrat";
   font-style: italic;
+  font-weight: 100;
   font-display: swap;
-  src: url(/fonts/Montserrat-Italic-VariableFont_wght.ttf);
+  src: url(/fonts/Montserrat-ThinItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 200;
+  font-display: swap;
+  src: url(/fonts/Montserrat-ExtraLightItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url(/fonts/Montserrat-LightItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/Montserrat-RegularItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url(/fonts/Montserrat-MediumItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url(/fonts/Montserrat-SemiBoldItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url(/fonts/Montserrat-BoldItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url(/fonts/Montserrat-ExtraBoldItalic.ttf);
+}
+@font-face {
+  font-family: "Montserrat";
+  font-style: italic;
+  font-weight: 900;
+  font-display: swap;
+  src: url(/fonts/Montserrat-BlackItalic.ttf);
 }
 
 .glow {
@@ -408,4 +522,16 @@ html {
   100% {
     background-position: 50px 50px;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
