@@ -29,8 +29,13 @@ export const flap = createRouter()
   .mutation("startGame", {
     input: getByTwitterValidator,
     async resolve({ input, ctx }) {
-      await ctx.prisma.flappy_bear.update({
-        data: { game_started: new Date() },
+      await ctx.prisma.flappy_bear.upsert({
+        create: {
+          twitter_handle: input.twitterHandle,
+          highscore: 0,
+          game_started: new Date(),
+        },
+        update: { game_started: new Date() },
         where: {
           twitter_handle: input.twitterHandle,
         },
