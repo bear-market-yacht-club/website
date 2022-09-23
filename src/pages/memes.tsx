@@ -6,7 +6,8 @@ const Memes: NextPage = () => {
   return (
     <Layout>
       <Heading>Memes (Bear Memes)</Heading>
-      <div className="flex flex-col items-center gap-4"></div>
+      <p className="mb-8">This may be a bare page, but its a bear market.</p>
+      <p>Will be live soon.</p>
     </Layout>
   );
 };
