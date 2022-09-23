@@ -20,6 +20,7 @@ const FlappyBear: NextPage = () => {
     "flap.getHighscore",
     { twitterHandle },
   ]);
+  const { data: leaderboards } = trpc.useQuery(["flap.leaderboards"]);
 
   useEffect(() => {
     const th = localStorage
@@ -209,7 +210,37 @@ const FlappyBear: NextPage = () => {
           )}
         </div>
         <hr className="my-12" />
-        <div className="text-center">Leaderboard will be live soon!</div>
+        <div className="flex flex-col items-center">
+          <Heading>Leaderboards</Heading>
+          {leaderboards && (
+            <table className="w-[80%] sm:w-1/2 lg:w-1/3 mb-8">
+              <td>
+                {leaderboards.map((entry, i) => (
+                  <tr
+                    key={i}
+                    style={{
+                      fontWeight:
+                        twitterHandle === entry.twitter_handle
+                          ? "bolder"
+                          : "normal",
+                      color:
+                        twitterHandle === entry.twitter_handle
+                          ? "#bfc500"
+                          : "white",
+                    }}
+                  >
+                    {entry.twitter_handle}
+                  </tr>
+                ))}
+              </td>
+              <td className="font-bold text-yellow">
+                {leaderboards.map((entry, i) => (
+                  <tr key={i}>{entry.highscore}</tr>
+                ))}
+              </td>
+            </table>
+          )}
+        </div>
       </div>
     </Layout>
   );

@@ -27,7 +27,8 @@ const Header: FC = ({}) => {
     <header className="text-white bg-black p-4 relative z-10">
       <Head>
         <title>
-          BMYC | {pages.filter((p) => p.route === router.pathname)[0]?.title}
+          BMYC |{" "}
+          {pages.filter((p) => p.route === router.pathname)[0]?.title || ""}
         </title>
       </Head>
       <nav className="relative flex items-center justify-between transition duration-500">

@@ -103,4 +103,13 @@ export const flap = createRouter()
       });
       return res?.highscore;
     },
+  })
+  .query("leaderboards", {
+    async resolve({ ctx }) {
+      return await ctx.prisma.flappy_bear.findMany({
+        select: { twitter_handle: true, highscore: true },
+        orderBy: { highscore: "desc" },
+        take: 25,
+      });
+    },
   });
