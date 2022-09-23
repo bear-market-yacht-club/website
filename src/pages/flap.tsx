@@ -10,12 +10,13 @@ const FlappyBear: NextPage = () => {
   const [twitterHandle, setTwitterHandle] = useState("");
   const [isLoaded, setIsLoaded] = useState(false);
   const [isHighscore, setIsHighscore] = useState(false);
+  const [highscore, setHighscore] = useState(0);
   const canvas = useRef<HTMLCanvasElement>(null);
 
   const { mutate: applyMutation } = trpc.useMutation("flap.setScore");
   const { mutate: startGame } = trpc.useMutation("flap.startGame");
   const { mutate: endGame } = trpc.useMutation("flap.endGame");
-  const { data: highscore, refetch: fetchHighscore } = trpc.useQuery([
+  const { refetch: fetchHighscore } = trpc.useQuery([
     "flap.getHighscore",
     { twitterHandle },
   ]);
@@ -65,6 +66,7 @@ const FlappyBear: NextPage = () => {
             birdDY = 9;
           } else if (!isHighscore) {
             startGame({ twitterHandle });
+            fetchHighscore().then((value) => (hs = value.data || highscore));
             gameStarted = true;
           }
         };
@@ -106,6 +108,7 @@ const FlappyBear: NextPage = () => {
             ) {
               if (score > hs) {
                 hs = score;
+                setHighscore(hs);
                 setIsHighscore(true);
                 applyMutation({
                   twitter_handle: twitterHandle,
@@ -143,9 +146,12 @@ const FlappyBear: NextPage = () => {
 
   return (
     <Layout>
-      <Heading>Flappy Bear</Heading>
+      <Heading className="-mt-4">Flappy Bear</Heading>
 
       <div className="">
+        <p className="-mt-4 mb-2 text-center">
+          Help the bear fly through the FUD!
+        </p>
         <div className="flex w-full justify-center">
           {!!twitterHandle ? (
             <>
