@@ -211,7 +211,7 @@ const FlappyBear: NextPage = () => {
         </div>
         <hr className="my-12" />
         <div className="flex flex-col items-center">
-          <Heading>Leaderboards</Heading>
+          <Heading>Leaderboard</Heading>
           {leaderboards && (
             <table className="w-[80%] sm:w-1/2 lg:w-1/3 mb-8">
               <td>
