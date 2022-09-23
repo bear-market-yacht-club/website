@@ -13,8 +13,6 @@ import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 import * as gtag from "../types/gtag";
 
-Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));
-
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
@@ -23,6 +21,9 @@ const DAppConfig: Config = {
 };
 
 const isProduction = process.env.NODE_ENV === "production";
+if (isProduction) {
+  Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));
+}
 
 const MyApp: AppType = ({
   Component,

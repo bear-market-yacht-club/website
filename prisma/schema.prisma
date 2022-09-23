@@ -35,4 +35,10 @@ model TrackCheckStatus {
     checkedTwitterHandle String
     dateTime             DateTime @default(now())
 }
-// }
+
+model flappy_bear {
+    twitter_handle String @id
+    highscore      Int @default(0)
+    date           DateTime @default(now())
+    game_started   DateTime?
+}

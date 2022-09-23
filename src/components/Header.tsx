@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
-import ConnectButton from "./ConnectButton";
 
 const links: {
   href: string;
@@ -57,6 +56,7 @@ const Header: FC = ({}) => {
             >
               {[
                 ...[
+                  { title: "Flappy Bear", route: "/flap" },
                   { title: "RSVP", route: "/rsvp" },
                   { title: "Apply", route: "/apply" },
                   { title: "Mint", route: "/mint" },

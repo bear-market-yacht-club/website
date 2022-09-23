@@ -19,3 +19,9 @@ export const rsvpTrack = z.object({
 export const getByTwitterValidator = z.object({
   twitterHandle: z.string().trim().min(1),
 });
+
+
+export const flapValidator = z.object({
+  twitter_handle: z.string().trim().min(1),
+  highscore: z.number(),
+});
