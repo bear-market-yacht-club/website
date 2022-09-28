@@ -4,6 +4,7 @@ import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 import { trpc } from "../utils/trpc";
+import { wrap } from "../utils/wrap";
 
 const FlappyBear: NextPage = () => {
   const nameRef = useRef<HTMLInputElement>(null);
@@ -68,6 +69,9 @@ const FlappyBear: NextPage = () => {
         let hs = 0;
         fetchHighscore().then((value) => (hs = value.data || 0));
         let scoreGotten = false;
+        let bgPos = 0;
+        let bg2Pos = 0;
+        const bgSize = canvasSizeY * 0.9496666666666667;
         c.onclick = () => {
           if (gameStarted) {
             birdDY = 9;
@@ -80,9 +84,16 @@ const FlappyBear: NextPage = () => {
         setInterval(async () => {
           ctx.drawImage(
             bg,
+            (bgPos = wrap(bgPos, -1, -bgSize, 0)),
             0,
+            bgSize,
+            canvasSizeY
+          );
+          ctx.drawImage(
+            bg,
+            (bg2Pos = wrap(bgPos + bgSize, -1, 0, bgSize)),
             0,
-            canvasSizeY * 0.9496666666666667,
+            bgSize,
             canvasSizeY
           );
           ctx.drawImage(bird, birdX, birdY, birdSize, birdSize);
