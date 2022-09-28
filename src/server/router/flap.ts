@@ -64,7 +64,7 @@ export const flap = createRouter()
           game_started: new Date(),
         },
         where: {
-          twitter_handle: user?.twitter_handle,
+          twitter_handle: user?.twitter_handle || input.twitterHandle,
         },
       });
     },
