@@ -48,7 +48,7 @@ const FlappyBear: NextPage = () => {
       ) as HTMLCanvasElement;
       if (c) {
         const ctx = c.getContext("2d")!;
-        ctx.font = ctx.font.replace(/\d+px/, "20px");
+        ctx.font = "600 20px Montserrat";
         const bird = new Image();
         bird.src = "/images/flappy-bear/bear.svg";
         const bg = new Image();
