@@ -72,12 +72,11 @@ export const flap = createRouter()
   .mutation("endGame", {
     input: getByTwitterValidator,
     async resolve({ input, ctx }) {
-      await ctx.prisma.flappy_bear.update({
-        data: { game_started: null },
-        where: {
-          twitter_handle: input.twitterHandle,
-        },
-      });
+      await ctx.prisma.$executeRaw`
+        UPDATE flappy_bear
+        SET time_played = time_played + EXTRACT( 'epoch'  FROM (NOW() - game_started)) , game_started = NULL
+        WHERE twitter_handle = ${input.twitterHandle}
+      `;
     },
   })
   .query("getHighscore", {

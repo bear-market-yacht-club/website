@@ -41,4 +41,5 @@ model flappy_bear {
     highscore      Int @default(0)
     date           DateTime @default(now())
     game_started   DateTime?
+    time_played    Int @default(0)
 }
