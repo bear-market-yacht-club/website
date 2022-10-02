@@ -150,7 +150,6 @@ const FlappyBear: NextPage = () => {
           ctx.fillText(`Best: ${hs}`, canvasSizeX - 100, 25);
         }, interval);
       }
-    } else {
     }
   }, [isLoaded]);
 

@@ -13,6 +13,8 @@ const links: {
   // { href: "https://www.opensea.io/bearmarketyc", src: "opensea.svg" },
 ];
 const pages = [
+  { title: "Home", route: "/", hidden: true },
+  { title: "Fudballs", route: "/fudballs" },
   { title: "Flappy Bear", route: "/flap" },
   { title: "Bemes", route: "/memes" },
   { title: "Mint", route: "/mint" },
@@ -68,18 +70,20 @@ const Header: FC = ({}) => {
               }
             >
               {[
-                ...pages.map((page) => (
-                  <li
-                    key={page.route}
-                    className={`${
-                      router.pathname === page.route
-                        ? "text-yellow font-bold"
-                        : "text-white hover:text-yellow"
-                    }`}
-                  >
-                    <Link href={page.route}>{page.title}</Link>
-                  </li>
-                )),
+                ...pages
+                  .filter((page) => !page.hidden)
+                  .map((page) => (
+                    <li
+                      key={page.route}
+                      className={`${
+                        router.pathname === page.route
+                          ? "text-yellow font-bold"
+                          : "text-white hover:text-yellow"
+                      }`}
+                    >
+                      <Link href={page.route}>{page.title}</Link>
+                    </li>
+                  )),
                 (() => {
                   return (
                     <div className="flex flex-col lg:flex-row w-full">
