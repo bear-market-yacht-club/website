@@ -21,7 +21,6 @@ const DAppConfig: Config = {
   },
 };
 
-const isProduction = process.env.NODE_ENV === "production";
 if (isProduction) {
   Router.events.on("routeChangeComplete", (url) => gtag.pageview(url));
 }
