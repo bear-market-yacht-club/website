@@ -107,9 +107,7 @@ export const fudballs = createRouter()
         })
       )?.game_started;
       if (game_started) {
-        console.log("game_started: ", game_started.getTime());
         const time_played = Date.now() - game_started.getTime();
-        console.log("timePlayed  : ", time_played);
         await ctx.prisma.$executeRaw`
         UPDATE fudballs
         SET time_played = time_played + ${time_played} , game_started = null
