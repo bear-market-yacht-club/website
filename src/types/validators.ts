@@ -21,7 +21,17 @@ export const getByTwitterValidator = z.object({
 });
 
 
-export const flapValidator = z.object({
+export const highscoreValidator = z.object({
   twitter_handle: z.string().trim().min(1),
   highscore: z.number(),
+});
+
+export const bestTimeValidator = z.object({
+  twitter_handle: z.string().trim().min(1),
+  best_time: z.number(),
+});
+
+export const muteValidator = z.object({
+  twitter_handle: z.string().trim().min(1),
+  muted: z.boolean(),
 });

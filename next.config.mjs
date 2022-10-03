@@ -15,4 +15,16 @@ function defineNextConfig(config) {
 export default defineNextConfig({
   reactStrictMode: true,
   swcMinify: true,
+  redirects: () => [
+    {
+      source: "/apply",
+      destination: "https://www.premint.xyz/bear-market-yacht-club/",
+      permanent: true,
+    },
+    {
+      source: "/rsvp",
+      destination: "https://www.premint.xyz/bear-market-yacht-club/",
+      permanent: true,
+    },
+  ],
 });

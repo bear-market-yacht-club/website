@@ -1,9 +1,12 @@
 import { createRouter } from "./context";
-import { flapValidator, getByTwitterValidator } from "../../types/validators";
+import {
+  highscoreValidator,
+  getByTwitterValidator,
+} from "../../types/validators";
 
 export const flap = createRouter()
   .mutation("setScore", {
-    input: flapValidator,
+    input: highscoreValidator,
     async resolve({ input, ctx }) {
       const user = await ctx.prisma.flappy_bear.findFirst({
         where: {

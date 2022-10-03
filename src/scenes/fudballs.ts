@@ -1,15 +1,112 @@
 import Phaser, { Scene } from "phaser";
+import dateToString from "../utils/dateToString";
+
+export class PauseMenu extends Scene {
+  private bottomOffset = 0;
+
+  constructor() {
+    super("pause-menu");
+  }
+
+  create({
+    startGame,
+    twitterHandle,
+  }: {
+    startGame: any;
+    twitterHandle: string;
+  }) {
+    this.bottomOffset = this.sys.canvas.height - this.sys.canvas.width;
+    this.add
+      .text(
+        this.sys.canvas.width / 2,
+        (this.sys.canvas.height - this.bottomOffset) / 2,
+        "Click to start",
+        {
+          color: "#bfc500",
+          fontFamily: "Montserrat",
+          fontSize: "24px",
+          fontStyle: "600",
+          stroke: "black",
+          strokeThickness: 2,
+        }
+      )
+      .setOrigin(0.5, 0.5);
+
+    this.input.on("pointerdown", () => {
+      startGame({ twitterHandle });
+      this.scene.resume("fudballs");
+      this.scene.stop();
+    });
+  }
+}
+
+export class GameoverMenu extends Scene {
+  private bottomOffset = 0;
+
+  constructor() {
+    super("gameover-menu");
+  }
+
+  create({
+    game,
+    startGame,
+    twitterHandle,
+  }: {
+    game: Phaser.Scenes.ScenePlugin;
+    startGame: any;
+    twitterHandle: string;
+  }) {
+    this.bottomOffset = this.sys.canvas.height - this.sys.canvas.width;
+    this.add
+      .text(
+        this.sys.canvas.width / 2,
+        (this.sys.canvas.height - this.bottomOffset) / 2 - 20,
+        "Game Over",
+        {
+          color: "#bfc500",
+          fontFamily: "Montserrat",
+          fontSize: "24px",
+          fontStyle: "600",
+          stroke: "black",
+          strokeThickness: 2,
+        }
+      )
+      .setOrigin(0.5, 0.5);
+    this.add
+      .text(
+        this.sys.canvas.width / 2,
+        (this.sys.canvas.height - this.bottomOffset) / 2 + 20,
+        "Click to restart",
+        {
+          color: "#bfc500",
+          fontFamily: "Montserrat",
+          fontSize: "16px",
+          fontStyle: "600",
+          stroke: "black",
+          strokeThickness: 2,
+        }
+      )
+      .setOrigin(0.5, 0.5);
+
+    this.input.once("pointerdown", () => {
+      startGame({ twitterHandle });
+      game.restart({ restart: true });
+      this.scene.stop();
+    });
+  }
+}
 
 export default class Fudballs extends Scene {
   public score = 0;
   public highScore = 0;
   public elapsedTime = 0;
   public bestTime = 0;
-  public dead = false;
   public fireballCount = 16;
 
   private bearSpeed = 0.005;
   private fireballSpeed = 70;
+  private beatHighscore = false;
+  private beatBestTime = false;
   private gameArea?: Phaser.Types.Physics.Arcade.ImageWithDynamicBody;
   private spawnAreas?: Phaser.Physics.Arcade.Group;
   private spawnAreasRect: Phaser.GameObjects.Rectangle[] = [];
@@ -22,37 +119,99 @@ export default class Fudballs extends Scene {
   private timerText?: Phaser.GameObjects.Text;
   private bestTimeText?: Phaser.GameObjects.Text;
   private activeFireballs: boolean[] = [false];
+  private bgMusic?: Phaser.Sound.BaseSound;
+  private bottomOffset = 0;
+
+  private twitterHandle?: string;
+  private startGame?: any;
+  private endGame?: any;
+  private setHighscore?: any;
+  private setBestTime?: any;
 
   constructor() {
     super("fudballs");
   }
 
   preload() {
+    this.bottomOffset = this.sys.canvas.height - this.sys.canvas.width;
+
     this.load.image("empty", "/images/empty.png");
     this.load.image("bg", "/images/fudballs/bg.png");
     this.load.spritesheet("coin", "/images/fudballs/coin.png", {
       frameWidth: 26,
     });
     this.load.image("bear-idle", "/images/fudballs/bear-idle.png");
+    this.load.image("bear-dead", "/images/fudballs/bear-dead.png");
     this.load.spritesheet("bear-left", "/images/fudballs/bear-left.png", {
       frameWidth: 32,
     });
     this.load.spritesheet("bear-right", "/images/fudballs/bear-right.png", {
       frameWidth: 32,
     });
-    this.load.spritesheet("fireball", "/images/fudballs/fireball.png", {
-      frameWidth: 16,
-    });
+    this.load.image("fireball", "/images/fudballs/fireball.png");
+
+    this.load.audio("bg", ["/sound/fudballs/bg.m4a"]);
+    this.load.audio("highscore", ["/sound/fudballs/highscore.ogg"]);
+    this.load.audio("lose", ["/sound/fudballs/lose.m4a"]);
+    [...Array(10)].forEach((_, i) =>
+      this.load.audio(`coin${i}`, [`/sound/fudballs/coin${i}.wav`])
+    );
   }
 
-  create() {
-    this.dead = false;
+  async create(
+    data:
+      | {
+          twitterHandle: string;
+          fetchBestTime: any;
+          fetchHighscore: any;
+          setHighscore: any;
+          setBestTime: any;
+          startGame: any;
+          endGame: any;
+          restart: boolean;
+        }
+      | undefined
+  ) {
+    if (!this.bgMusic || !this.bgMusic.isPlaying) {
+      this.bgMusic = this.sound.add("bg");
+      this.bgMusic.play({ volume: 1, loop: true });
+    }
+
+    this.beatHighscore = false;
+    this.beatBestTime = false;
     this.score = 0;
     this.elapsedTime = 0;
+    if (data?.twitterHandle) {
+      this.twitterHandle = data.twitterHandle;
+    }
+    if (data?.fetchHighscore) {
+      const value: { data: number | undefined } = await data.fetchHighscore();
+      this.highScore = value.data || 0;
+    }
+    if (data?.fetchBestTime) {
+      const value: { data: number | undefined } = await data.fetchBestTime();
+      this.bestTime = value.data || 0;
+    }
+    if (data?.setHighscore) {
+      this.setHighscore = data.setHighscore;
+    }
+    if (data?.setBestTime) {
+      this.setBestTime = data.setBestTime;
+    }
+    if (data?.startGame) {
+      this.startGame = data.startGame;
+    }
+    if (data?.endGame) {
+      this.endGame = data.endGame;
+    }
 
     // set spawn area
     this.gameArea = this.physics.add
-      .image(this.sys.canvas.width / 2, this.sys.canvas.height / 2, "empty")
+      .image(
+        this.sys.canvas.width / 2,
+        (this.sys.canvas.height - this.bottomOffset) / 2,
+        "empty"
+      )
       .setCircle(16)
       .setScale(8, 8);
     const spawnAreaSize = 50;
@@ -133,7 +292,7 @@ export default class Fudballs extends Scene {
       .text(
         this.sys.canvas.width - 125,
         this.sys.canvas.height - 10,
-        `Best: ${this.dateToString(this.bestTime)}`,
+        `Best: ${dateToString(this.bestTime)}`,
         {
           color: "#bfc500",
           fontFamily: "Montserrat",
@@ -167,7 +326,7 @@ export default class Fudballs extends Scene {
     // the bear
     this.bear = this.physics.add.sprite(
       this.sys.canvas.width / 2,
-      this.sys.canvas.height / 2,
+      (this.sys.canvas.height - this.bottomOffset) / 2,
       "bear-idle"
     );
     this.bear.setSize(16, 25);
@@ -241,8 +400,13 @@ export default class Fudballs extends Scene {
       callbackScope: this,
     });
 
-    this.scene.launch("pause-menu");
-    this.scene.pause();
+    if (!data || !data.restart) {
+      this.scene.launch("pause-menu", {
+        startGame: this.startGame,
+        twitterHandle: this.twitterHandle,
+      });
+      this.scene.pause();
+    }
   }
 
   update(_time: number, delta: number) {
@@ -266,7 +430,10 @@ export default class Fudballs extends Scene {
             delta * this.bearSpeed
           ),
           Phaser.Math.Interpolation.Linear(
-            [this.bear.y, this.input.activePointer.worldY - 20],
+            [
+              this.bear.y,
+              this.input.mousePointer.worldY || this.input.pointer1.worldY - 70,
+            ],
             delta * this.bearSpeed
           )
         );
@@ -291,22 +458,15 @@ export default class Fudballs extends Scene {
     if (this.timerText && this.bestTimeText) {
       this.elapsedTime += delta;
       if (this.elapsedTime > this.bestTime) {
+        if (!this.beatBestTime) {
+          this.sound.play("highscore", { volume: 0.5 });
+          this.beatBestTime = true;
+        }
         this.bestTime = this.elapsedTime;
-        this.bestTimeText.text = this.dateToString(this.bestTime);
+        this.bestTimeText.text = `Best: ${dateToString(this.bestTime)}`;
       }
-      this.timerText.text = this.dateToString(this.elapsedTime);
+      this.timerText.text = dateToString(this.elapsedTime);
     }
-  }
-
-  private dateToString(date: number) {
-    const _date = new Date(date);
-    return `${_date.getMinutes().toString().padStart(2, "0")}:${_date
-      .getSeconds()
-      .toString()
-      .padStart(2, "0")}.${(_date.getMilliseconds() / 10)
-      .toFixed(0)
-      .toString()
-      .padStart(2, "0")}`;
   }
 
   private enterFireball(
@@ -314,7 +474,6 @@ export default class Fudballs extends Scene {
     f: Phaser.GameObjects.GameObject
   ) {
     const fireball = f as Phaser.Physics.Arcade.Sprite;
-    console.log(this.activeFireballs[fireball.getData("i")]);
     this.activeFireballs[fireball.getData("i")] = true;
   }
 
@@ -322,7 +481,6 @@ export default class Fudballs extends Scene {
     const fireball = f as Phaser.Physics.Arcade.Sprite;
     // if the fireball just spawned, dont do anything
     if (!this.activeFireballs[fireball.getData("i")]) {
-      console.log("spawn");
       return;
     }
 
@@ -376,11 +534,16 @@ export default class Fudballs extends Scene {
 
   private increaseScore() {
     ++this.score;
+    this.sound.play(`coin${Phaser.Math.RND.between(0, 9)}`, { volume: 0.5 });
     if (this.scoreText) {
       this.scoreText.text = `${this.score.toString()}Ξ`;
     }
     if (this.highScoreText) {
       if (this.score > this.highScore) {
+        if (!this.beatHighscore) {
+          this.sound.play("highscore", { volume: 0.5 });
+          this.beatHighscore = true;
+        }
         this.highScore = this.score;
         this.highScoreText.text = `Best: ${this.highScore.toString()}Ξ`;
       }
@@ -404,15 +567,34 @@ export default class Fudballs extends Scene {
   }
 
   private onDie(
-    player: Phaser.GameObjects.GameObject,
+    p: Phaser.GameObjects.GameObject,
     f: Phaser.GameObjects.GameObject
   ) {
-    if (!this.dead) {
-      this.dead = true;
-      // const fireball = f as Phaser.Physics.Arcade.Sprite;
-      this.scene.start("pause-menu");
-      this.scene.restart();
-      this.scene.pause();
+    if (this.score >= this.highScore) {
+      this.highScore = this.score;
+      this.setHighscore({
+        twitter_handle: this.twitterHandle,
+        highscore: this.highScore,
+      });
     }
+    if (this.elapsedTime >= this.bestTime) {
+      this.bestTime = this.elapsedTime;
+      this.setBestTime({
+        twitter_handle: this.twitterHandle,
+        best_time: Math.floor(this.bestTime),
+      });
+    }
+
+    const player = p as Phaser.Physics.Arcade.Sprite;
+    player.setTexture("bear-dead");
+    this.sound.play("lose", { volume: 0.5 });
+    this.scene.pause();
+
+    this.endGame({ twitterHandle: this.twitterHandle });
+    this.scene.launch("gameover-menu", {
+      game: this.scene,
+      startGame: this.startGame,
+      twitterHandle: this.twitterHandle,
+    });
   }
 }

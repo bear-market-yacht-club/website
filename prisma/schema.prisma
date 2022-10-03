@@ -43,3 +43,17 @@ model flappy_bear {
     game_started   DateTime?
     time_played    Int @default(0)
 }
+
+model fudballs {
+    twitter_handle  String @id
+    first_play_date DateTime @default(now())
+    highscore       Int @default(0)
+    best_time       Int @default(0)
+    time_played     Int @default(0)
+    game_started    DateTime?
+}
+
+model game_settings {
+    twitter_handle      String @id
+    muted               Boolean @default(false)
+}
