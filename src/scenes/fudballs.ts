@@ -51,16 +51,20 @@ export class GameoverMenu extends Scene {
     game,
     startGame,
     twitterHandle,
+    highscore,
+    bestTime,
   }: {
     game: Phaser.Scenes.ScenePlugin;
     startGame: any;
     twitterHandle: string;
+    highscore?: number;
+    bestTime?: number;
   }) {
     this.bottomOffset = this.sys.canvas.height - this.sys.canvas.width;
     this.add
       .text(
         this.sys.canvas.width / 2,
-        (this.sys.canvas.height - this.bottomOffset) / 2 - 20,
+        (this.sys.canvas.height - this.bottomOffset) / 2 - 40,
         "Game Over",
         {
           color: "#bfc500",
@@ -75,7 +79,7 @@ export class GameoverMenu extends Scene {
     this.add
       .text(
         this.sys.canvas.width / 2,
-        (this.sys.canvas.height - this.bottomOffset) / 2 + 20,
+        (this.sys.canvas.height - this.bottomOffset) / 2,
         "Click to restart",
         {
           color: "#bfc500",
@@ -87,6 +91,38 @@ export class GameoverMenu extends Scene {
         }
       )
       .setOrigin(0.5, 0.5);
+
+    //share to twitter button
+    const html = (value: number, time = false) => `<div class="mx-auto w-[${
+      this.sys.canvas.width
+    }px]">
+            <a rel="noreferrer" target="_blank"
+              class="text-lg font-extrabold font-[Montserrat] text-yellow bg-[#00000077] py-2"
+              href='https://twitter.com/intent/tweet?text=${
+                time
+                  ? `I just dodged fudballs for ${dateToString(
+                      value
+                    )}!! 🐻 Come dodge the fud 👉 bmyc.io/fudballs! @BearMarketYC`
+                  : `Just collected ${value}Ξ in Fudballs!! 🐻 Come dodge the fud 👉 bmyc.io/fudballs! @BearMarketYC`
+              }'>    Tweet your achievement!    
+            </a>
+        </div>`;
+    if (highscore) {
+      //} && highscore > 9) {
+      this.add
+        .dom(
+          this.sys.canvas.width / 2,
+          (this.sys.canvas.height - this.bottomOffset) / 2 + 40
+        )
+        .createFromHTML(html(highscore));
+    } else if (bestTime) {
+      this.add
+        .dom(
+          this.sys.canvas.width / 2,
+          (this.sys.canvas.height - this.bottomOffset) / 2 + 40
+        )
+        .createFromHTML(html(bestTime, true));
+    }
 
     this.input.once("pointerdown", () => {
       startGame({ twitterHandle });
@@ -570,15 +606,13 @@ export default class Fudballs extends Scene {
     p: Phaser.GameObjects.GameObject,
     f: Phaser.GameObjects.GameObject
   ) {
-    if (this.score >= this.highScore) {
-      this.highScore = this.score;
+    if (this.beatHighscore) {
       this.setHighscore({
         twitter_handle: this.twitterHandle,
         highscore: this.highScore,
       });
     }
-    if (this.elapsedTime >= this.bestTime) {
-      this.bestTime = this.elapsedTime;
+    if (this.beatBestTime) {
       this.setBestTime({
         twitter_handle: this.twitterHandle,
         best_time: Math.floor(this.bestTime),
@@ -595,6 +629,8 @@ export default class Fudballs extends Scene {
       game: this.scene,
       startGame: this.startGame,
       twitterHandle: this.twitterHandle,
+      highscore: this.beatHighscore ? this.highScore : undefined,
+      bestTime: this.beatBestTime ? this.bestTime : undefined,
     });
   }
 }

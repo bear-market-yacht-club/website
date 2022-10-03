@@ -98,6 +98,9 @@ const Fudballs: NextPage = () => {
           default: "arcade",
           arcade: { /*debug:!isProduction,*/ gravity: { x: 0, y: 0 } },
         },
+        dom: {
+          createContainer: true,
+        },
         scene: [Fudballs, GameoverMenu, PauseMenu],
       });
       setGame(fudballs);

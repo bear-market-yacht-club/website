@@ -157,7 +157,7 @@ export const fudballs = createRouter()
       return await ctx.prisma.fudballs.findMany({
         select: { twitter_handle: true, highscore: true },
         orderBy: { highscore: "desc" },
-        take: 25,
+        take: 50,
       });
     },
   })
@@ -166,7 +166,7 @@ export const fudballs = createRouter()
       return await ctx.prisma.fudballs.findMany({
         select: { twitter_handle: true, best_time: true },
         orderBy: { best_time: "desc" },
-        take: 25,
+        take: 50,
       });
     },
   });
