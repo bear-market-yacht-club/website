@@ -156,6 +156,7 @@ export const fudballs = createRouter()
     async resolve({ ctx }) {
       return await ctx.prisma.fudballs.findMany({
         select: { twitter_handle: true, highscore: true },
+        where: { highscore: { gt: 0 } },
         orderBy: { highscore: "desc" },
         take: 50,
       });
@@ -165,6 +166,7 @@ export const fudballs = createRouter()
     async resolve({ ctx }) {
       return await ctx.prisma.fudballs.findMany({
         select: { twitter_handle: true, best_time: true },
+        where: { best_time: { gt: 0 } },
         orderBy: { best_time: "desc" },
         take: 50,
       });

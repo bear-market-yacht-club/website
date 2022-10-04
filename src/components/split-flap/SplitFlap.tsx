@@ -24,46 +24,49 @@ const SplitFlap: FC = () => {
 	*/
 
     // this will be the Solari Display object
-    const display = CTR.SolariBoard({
-      container: document.getElementById("splitflap-container"),
-      format: [
-        CTR.SOLARIVALUES.reverseDay,
-        ":",
-        CTR.SOLARIVALUES.reverseHour,
-        ":",
-        CTR.SOLARIVALUES.reverseMinute,
-        ":",
-        CTR.SOLARIVALUES.reverseMinute,
-      ],
-      segmentWidth: 50,
-      segmentHeight: 100,
-      fontSize: 70,
-    });
-    setInterval(update, 1000);
-
-    function update() {
-      const d = intervalToDuration({
-        start: utcToZonedTime(new Date(), "America/New_York"),
-        end: utcToZonedTime(
-          new Date("2022-10-26T16:20:00"),
-          "America/New_York"
-        ),
+    if (!document.getElementById("splitflap-container")?.hasChildNodes()) {
+      const display = CTR.SolariBoard({
+        container: document.getElementById("splitflap-container"),
+        format: [
+          CTR.SOLARIVALUES.reverseDay,
+          ":",
+          CTR.SOLARIVALUES.reverseHour,
+          ":",
+          CTR.SOLARIVALUES.reverseMinute,
+          ":",
+          CTR.SOLARIVALUES.reverseMinute,
+        ],
+        segmentWidth: 50,
+        segmentHeight: 100,
+        fontSize: 70,
       });
 
-      display.setContent([
-        (d.days! < 10 ? "0" : "") + d.days,
-        ":",
-        (d.hours! < 10 ? "0" : "") + d.hours,
-        ":",
-        (d.minutes! < 10 ? "0" : "") + d.minutes,
-        ":",
-        (d.seconds! < 10 ? "0" : "") + d.seconds,
-      ]);
+      const update = () => {
+        const d = intervalToDuration({
+          start: utcToZonedTime(new Date(), "America/New_York"),
+          end: utcToZonedTime(
+            new Date("2022-10-26T16:20:00"),
+            "America/New_York"
+          ),
+        });
+
+        display.setContent([
+          (d.days! < 10 ? "0" : "") + d.days,
+          ":",
+          (d.hours! < 10 ? "0" : "") + d.hours,
+          ":",
+          (d.minutes! < 10 ? "0" : "") + d.minutes,
+          ":",
+          (d.seconds! < 10 ? "0" : "") + d.seconds,
+        ]);
+      };
+
+      setInterval(update, 1000);
     }
   }, []);
 
   return (
-    <div id="viewport" className="displayBase mb-32">
+    <div id="viewport" className="displayBase">
       <div id="splitflap-container"></div>
     </div>
   );

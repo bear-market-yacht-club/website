@@ -3,18 +3,16 @@
   -moz-perspective: 400px;
   -webkit-perspective-origin: 50% 50%;
   -moz-perspective-origin: 50% 50%;
-  
 }
 .displayBase * {
   -webkit-transform-style: preserve-3d;
   -moz-transform-style: preserve-3d;
 }
-.display {
-
+/* .display {
   position: absolute;
   left: 50%;
   top: 50%;
-}
+} */
 .segments {
   list-style-type: none;
   float: left;
