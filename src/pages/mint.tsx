@@ -17,9 +17,10 @@ const Mint: NextPage = () => {
             alt="bears preview"
           />
         </div>
-        <Heading>Minting In:</Heading>
-        <div className="mx-auto">
-          <SplitFlap />
+        <Heading>Minting:</Heading>
+        <div className="mx-auto -mt-8">
+          {/* <SplitFlap /> */}
+          October 26 4:20pm EST
         </div>
         <div className="flex w-[75%] lg:w-1/4 justify-between">
           <Button
