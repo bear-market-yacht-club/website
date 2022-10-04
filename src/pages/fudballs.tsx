@@ -183,7 +183,7 @@ const Fudballs: NextPage = () => {
           ) : (
             <form onSubmit={onSubmit}>
               <div className="space-y-8">
-                <p>Enter Twitter handle to start flapping</p>
+                <p>Enter Twitter handle to start dodging fud</p>
                 <div className="flex items-center">
                   <span className="text-yellow text-sm">@</span>
                   <input

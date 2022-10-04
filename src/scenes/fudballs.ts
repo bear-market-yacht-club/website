@@ -107,8 +107,7 @@ export class GameoverMenu extends Scene {
               }'>    Tweet your achievement!    
             </a>
         </div>`;
-    if (highscore) {
-      //} && highscore > 9) {
+    if (highscore && highscore > 9) {
       this.add
         .dom(
           this.sys.canvas.width / 2,
