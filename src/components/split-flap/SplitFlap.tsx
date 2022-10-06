@@ -43,11 +43,8 @@ const SplitFlap: FC = () => {
 
       const update = () => {
         const d = intervalToDuration({
-          start: utcToZonedTime(new Date(), "America/New_York"),
-          end: utcToZonedTime(
-            new Date("2022-10-26T20:20:00"),
-            "America/New_York"
-          ),
+          start: new Date(),
+          end: new Date("2022-10-26T20:20:00"),
         });
 
         display.setContent([
