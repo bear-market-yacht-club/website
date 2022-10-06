@@ -13,6 +13,7 @@ import type { AppRouter } from "../server/router";
 import "../styles/globals.css";
 import { isProduction } from "../types/generic";
 import * as gtag from "../types/gtag";
+import "../components/split-flap/SolariBoard.css";
 
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
