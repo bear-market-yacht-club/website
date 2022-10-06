@@ -19,7 +19,7 @@ const Mint: NextPage = () => {
           />
         </div>
         <Heading>Minting:</Heading>
-        <div className="mx-auto -mt-8">
+        <div className="-mt-8 scale-50 md:scale-100">
           <SplitFlap />
           {/* October 26 4:20pm EST */}
         </div>
