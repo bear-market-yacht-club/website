@@ -14,11 +14,12 @@ import "../styles/globals.css";
 import { isProduction } from "../types/generic";
 import * as gtag from "../types/gtag";
 import "../components/split-flap/SolariBoard.css";
+import { getDefaultProvider } from "ethers";
 
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]: "https://infura.io/v3/b04d2052bb564fe1b7013bd024f9c8ba",
+    [Mainnet.chainId]: getDefaultProvider("mainnet"),
   },
 };
 
