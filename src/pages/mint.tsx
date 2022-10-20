@@ -1,4 +1,5 @@
 import { useEthers } from "@usedapp/core";
+import { intervalToDuration } from "date-fns";
 import { keccak256 } from "ethers/lib/utils";
 import MerkleTree from "merkletreejs";
 import type { NextPage } from "next";
@@ -6,7 +7,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
-import SplitFlap from "../components/split-flap/SplitFlap";
 
 function getMerkleTree(): MerkleTree {
   const whitelistedAddresses = [
@@ -515,9 +515,24 @@ function getMerkleProof(addr: string): string[] {
   return getMerkleTree().getHexProof(keccak256(addr));
 }
 
+const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
+  return (
+    <div className="text-center min-w-20">
+      <div className="font-black text-8xl md:text-6xl">{amount}</div>
+      <div className="uppercase text-2xl md:text-lg">{unit}</div>
+    </div>
+  );
+};
+
 const Mint: NextPage = () => {
   const { account } = useEthers();
   const [whitelisted, setWhitelisted] = useState<boolean | null>(null);
+  const [mintDuration, setMintDuration] = useState<Duration>(
+    intervalToDuration({
+      start: new Date(),
+      end: new Date("2022-10-26T20:20:00"),
+    })
+  );
 
   useEffect(() => {
     if (account) {
@@ -528,6 +543,19 @@ const Mint: NextPage = () => {
       );
     }
   }, [account]);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const d = intervalToDuration({
+        start: new Date(),
+        end: new Date("2022-10-26T20:20:00"),
+      });
+
+      setMintDuration(d);
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <Layout>
@@ -542,11 +570,13 @@ const Mint: NextPage = () => {
           />
         </div>
         <Heading>Minting:</Heading>
-        <div className="-mt-8 scale-50 md:scale-100">
-          <SplitFlap />
-          {/* October 26 4:20pm EST */}
+        <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
+          <TimeSlot unit="days" amount={mintDuration?.days} />
+          <TimeSlot unit="hours" amount={mintDuration?.hours} />
+          <TimeSlot unit="minutes" amount={mintDuration?.minutes} />
+          <TimeSlot unit="seconds" amount={mintDuration?.seconds} />
         </div>
-        <div className="flex flex-col w-[75%] lg:w-1/4 gap-4 justify-between items-center text-center">
+        <div className="md:mt-8 flex flex-col w-[75%] lg:w-1/4 gap-4 justify-between items-center text-center">
           {whitelisted === null ? (
             <p>
               Check if you&apos;re whitelisted by connecting your MetaMask
