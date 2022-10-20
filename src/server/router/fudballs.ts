@@ -3,6 +3,7 @@ import {
   highscoreValidator,
   getByTwitterValidator,
   bestTimeValidator,
+  endGameValidator,
 } from "../../types/validators";
 
 export const fudballs = createRouter()
@@ -24,16 +25,21 @@ export const fudballs = createRouter()
         },
       });
 
-      if (
-        user?.game_started &&
-        (Date.now() - user.game_started.getTime()) / 1000 >= input.highscore / 4 //only 1½ coin a second
-      ) {
-        await ctx.prisma.fudballs.update({
-          data: {
-            highscore: input.highscore,
-          },
-          where: { twitter_handle: handle },
-        });
+      if (user?.game_started) {
+        const time_played_seconds =
+          Date.now() - user.game_started.getTime() / 1000;
+        // you can get 4 coins a second until 10s in, when it switches to 2 coins a second
+        if (
+          (time_played_seconds < 10 && input.highscore < 40) ||
+          time_played_seconds >= input.highscore / 2
+        ) {
+          await ctx.prisma.fudballs.update({
+            data: {
+              highscore: input.highscore,
+            },
+            where: { twitter_handle: handle },
+          });
+        }
       }
     },
   })
@@ -92,9 +98,9 @@ export const fudballs = createRouter()
     },
   })
   .mutation("endGame", {
-    input: getByTwitterValidator,
+    input: endGameValidator,
     async resolve({ input, ctx }) {
-      const handle = input.twitterHandle
+      const handle = input.twitter_handle
         .toLowerCase()
         .trim()
         .replace(/^@+/, "")
@@ -113,6 +119,13 @@ export const fudballs = createRouter()
         SET time_played = time_played + ${time_played} , game_started = null
         WHERE twitter_handle = ${handle}
       `;
+        await ctx.prisma.fudball_games.create({
+          data: {
+            twitter_handle: handle,
+            time_survived: time_played,
+            score: input.score,
+          },
+        });
       } else {
         console.error("Game hasn't started");
       }

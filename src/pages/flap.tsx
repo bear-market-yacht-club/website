@@ -133,7 +133,7 @@ const FlappyBear: NextPage = () => {
                   highscore: hs,
                 });
               }
-              endGame({ twitterHandle });
+              endGame({ twitter_handle: twitterHandle, score });
               gameStarted = false;
               score = 0;
               birdDY = 0;

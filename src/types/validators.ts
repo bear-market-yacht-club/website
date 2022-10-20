@@ -26,6 +26,11 @@ export const highscoreValidator = z.object({
   highscore: z.number(),
 });
 
+export const endGameValidator = z.object({
+  twitter_handle: z.string().trim().min(1),
+  score: z.number(),
+});
+
 export const bestTimeValidator = z.object({
   twitter_handle: z.string().trim().min(1),
   best_time: z.number(),

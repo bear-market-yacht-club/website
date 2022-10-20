@@ -42,6 +42,16 @@ model flappy_bear {
     date           DateTime @default(now())
     game_started   DateTime?
     time_played    Int @default(0)
+    flappy_bears   flappy_bear_games[]
+}
+
+model flappy_bear_games {
+    id              String @id @default(cuid())
+    twitter_handle  String
+    date_played     DateTime @default(now())
+    score           Int
+    time_survived   Int
+    flappy_bear     flappy_bear @relation(fields: [twitter_handle], references: [twitter_handle])
 }
 
 model fudballs {
@@ -51,6 +61,16 @@ model fudballs {
     best_time       Int @default(0)
     time_played     Int @default(0)
     game_started    DateTime?
+    games           fudball_games[]
+}
+
+model fudball_games {
+    id              String @id @default(cuid())
+    twitter_handle  String
+    date_played     DateTime @default(now())
+    score           Int
+    time_survived   Int
+    fudball         fudballs @relation(fields: [twitter_handle], references: [twitter_handle])
 }
 
 model game_settings {

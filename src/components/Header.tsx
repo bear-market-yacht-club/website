@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, useState } from "react";
+import ConnectButton from "./ConnectButton";
 
 const links: {
   href: string;
@@ -87,7 +88,7 @@ const Header: FC = ({}) => {
                 (() => {
                   return (
                     <div className="flex flex-col lg:flex-row w-full">
-                      {/* <ConnectButton className="text-sm min-w-max" /> */}
+                      <ConnectButton className="text-sm min-w-max" />
                       <div className="flex items-center justify-between mt-4 lg:mt-0 mx-4 lg:ml-10 gap-4">
                         {links.map((link) => (
                           <div

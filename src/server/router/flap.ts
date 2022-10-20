@@ -2,6 +2,7 @@ import { createRouter } from "./context";
 import {
   highscoreValidator,
   getByTwitterValidator,
+  endGameValidator,
 } from "../../types/validators";
 
 export const flap = createRouter()
@@ -73,19 +74,26 @@ export const flap = createRouter()
     },
   })
   .mutation("endGame", {
-    input: getByTwitterValidator,
+    input: endGameValidator,
     async resolve({ input, ctx }) {
       const time_played =
         Date.now() -
         (await ctx.prisma.flappy_bear.findFirst({
           select: { game_started: true },
-          where: { twitter_handle: input.twitterHandle },
+          where: { twitter_handle: input.twitter_handle },
         }))!.game_started!.getTime();
       await ctx.prisma.$executeRaw`
         UPDATE flappy_bear
         SET time_played = time_played + ${time_played} , game_started = null
-        WHERE twitter_handle = ${input.twitterHandle}
+        WHERE twitter_handle = ${input.twitter_handle}
       `;
+      await ctx.prisma.flappy_bear_games.create({
+        data: {
+          twitter_handle: input.twitter_handle,
+          time_survived: time_played,
+          score: input.score,
+        },
+      });
     },
   })
   .query("getHighscore", {

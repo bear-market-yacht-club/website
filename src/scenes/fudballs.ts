@@ -623,7 +623,7 @@ export default class Fudballs extends Scene {
     this.sound.play("lose", { volume: 0.5 });
     this.scene.pause();
 
-    this.endGame({ twitterHandle: this.twitterHandle });
+    this.endGame({ twitter_handle: this.twitterHandle, score: this.score });
     this.scene.launch("gameover-menu", {
       game: this.scene,
       startGame: this.startGame,
