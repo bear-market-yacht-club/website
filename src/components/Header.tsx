@@ -19,7 +19,7 @@ const pages = [
   { title: "Flappy Bear", route: "/flap" },
   { title: "Bemes", route: "/memes" },
   { title: "Mint", route: "/mint" },
-  { title: "Gallery", route: "/gallery" },
+  { title: "Club Schedule", route: "/roadmap" },
   { title: "About", route: "/about" },
 ];
 const Header: FC = ({}) => {
