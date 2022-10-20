@@ -25,7 +25,7 @@ const Roadmap: NextPage = () => {
     <Layout>
       <Heading>Club Schedule</Heading>
       <div className="grid gap-4 grid-cols-[1fr_2fr] lg:pr-24">
-        <Date>October 26, 4:20 EST</Date>
+        <Date>October 26, 4:20 PM EST</Date>
         <Cell top="Mint Out!" bottom="" />
         <Date>⋮</Date>
         <Cell
