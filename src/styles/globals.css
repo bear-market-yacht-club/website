@@ -14,10 +14,13 @@
   --form-control-color: var(--yellow);
 }
 
-body {
+html,
+body,
+#__next {
   font-family: Montserrat;
   color: white;
   background-color: black;
+  height: 100%;
 }
 
 a {

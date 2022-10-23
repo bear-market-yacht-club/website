@@ -84,7 +84,9 @@ const Header: FC = ({}) => {
                       }`}
                     >
                       <Link href={page.route}>
-                        <span className=" !no-underline">{page.title}</span>
+                        <span className="!no-underline cursor-pointer">
+                          {page.title}
+                        </span>
                       </Link>
                     </li>
                   )),
