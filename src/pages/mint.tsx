@@ -601,7 +601,7 @@ const Mint: NextPage = () => {
                 <span>
                   Check to agree to the{" "}
                   <Link href="/tos.txt">Terms of Service</Link> and{" "}
-                  <Link href="">Privacy Policy</Link>
+                  <Link href="/privacy-policy.txt">Privacy Policy</Link>
                 </span>
               }
             />
