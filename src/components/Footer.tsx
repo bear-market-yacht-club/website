@@ -16,20 +16,19 @@ const Footer: FC = ({}) => {
   const router = useRouter();
 
   return (
-    <footer className="text-white bg-black px-40 py-12 flex-shrink-0">
+    <footer className="text-white bg-black px-4 lg:px-40 py-12 flex-shrink-0">
       <hr />
-      <div className="w-full flex justify-between pt-6">
-        <div></div>
+      <div className="w-full flex flex-col md:flex-row items-center gap-8 justify-between pt-6">
         <div className="">
           <Link href="/">
             <img
-              className="max-w-[201px] cursor-pointer mr-8"
+              className="max-w-[201px] cursor-pointer"
               src="/images/logo-full.png"
               alt="bmyc logo with bear skull"
             />
           </Link>
         </div>
-        <div className="flex flex-col items-end">
+        <div className="flex flex-col items-center md:items-end">
           <div className="flex gap-8 mb-2">
             {links.map((link) => (
               <div
