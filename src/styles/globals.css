@@ -582,44 +582,12 @@ input[type="checkbox"]::before {
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
-/* input[type="checkbox"]:checked::before {
+input[type="checkbox"]:checked::before {
   transform: scale(1);
-} */
+}
 input[type="checkbox"]:disabled {
   --form-control-color: var(--form-control-disabled);
 
   color: var(--form-control-disabled);
   cursor: not-allowed;
 }
-/* 
-input[type=checkbox]::before {
-  transform-origin: bottom left;
-  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-}
-input[type=checkbox]:checked {
-  background-color: yellow;
-  position: relative;
-}
-
-input[type=checkbox]:checked::before {
-  content: "\2714";
-  font-size: 1.5em;
-  color: black;
-  position: absolute;
-  right: 1px;
-  top: -5px;
-} */
-
-/* 
-input[type=checkbox]:disabled {
-  border-color: #c0c0c0;
-  background-color: #c0c0c0;
-}
-
-input[type=checkbox]:disabled + span {
-  color: #c0c0c0;
-}
-
-input[type=checkbox]:focus {
-  box-shadow: 0 0 20px #007a7e;
-} */

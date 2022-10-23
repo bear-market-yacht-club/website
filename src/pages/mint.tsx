@@ -4,7 +4,10 @@ import { keccak256 } from "ethers/lib/utils";
 import MerkleTree from "merkletreejs";
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import Button from "../components/Button";
+import Checkbox from "../components/Checkbox";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 
@@ -526,13 +529,10 @@ const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
 
 const Mint: NextPage = () => {
   const { account } = useEthers();
+  const [agreed, setAgreed] = useState(false);
   const [whitelisted, setWhitelisted] = useState<boolean | null>(null);
-  const [mintDuration, setMintDuration] = useState<Duration>(
-    intervalToDuration({
-      start: new Date(),
-      end: new Date("2022-10-26T20:20:00"),
-    })
-  );
+  const [mintDuration, setMintDuration] = useState<Duration>();
+  const [onlyWhitelisted, setOnlyWhitelisted] = useState(true);
 
   useEffect(() => {
     if (account) {
@@ -545,13 +545,17 @@ const Mint: NextPage = () => {
   }, [account]);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    const setDuration = () => {
       const d = intervalToDuration({
         start: new Date(),
         end: new Date("2022-10-26T20:20:00"),
       });
 
       setMintDuration(d);
+    };
+    setDuration();
+    const intervalId = setInterval(() => {
+      setDuration();
     }, 1000);
 
     return () => clearInterval(intervalId);
@@ -587,6 +591,27 @@ const Mint: NextPage = () => {
           ) : (
             <p>You have been whitelisted!</p>
           )}
+        </div>
+        <div className="flex flex-col items-center gap-4">
+          <div>
+            <Checkbox
+              checked={agreed}
+              onChange={() => setAgreed((prev) => !prev)}
+              label={
+                <span>
+                  Check to agree to the <Link href="">Terms of Service</Link>{" "}
+                  and <Link href="">Privacy Policy</Link>
+                </span>
+              }
+            />
+          </div>
+          {!agreed && (
+            <div>
+              You must {onlyWhitelisted && "be whitelisted and "}agree to the
+              Terms of Service and Privacy Policy to mint
+            </div>
+          )}
+          <Button disabled={!agreed || whitelisted !== true}>Mint</Button>
         </div>
       </div>
     </Layout>
