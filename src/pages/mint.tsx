@@ -599,8 +599,9 @@ const Mint: NextPage = () => {
               onChange={() => setAgreed((prev) => !prev)}
               label={
                 <span>
-                  Check to agree to the <Link href="">Terms of Service</Link>{" "}
-                  and <Link href="">Privacy Policy</Link>
+                  Check to agree to the{" "}
+                  <Link href="/tos.txt">Terms of Service</Link> and{" "}
+                  <Link href="">Privacy Policy</Link>
                 </span>
               }
             />
