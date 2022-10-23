@@ -83,7 +83,9 @@ const Header: FC = ({}) => {
                           : "text-white hover:text-yellow"
                       }`}
                     >
-                      <Link href={page.route}>{page.title}</Link>
+                      <Link href={page.route}>
+                        <span className=" !no-underline">{page.title}</span>
+                      </Link>
                     </li>
                   )),
                 (() => {
