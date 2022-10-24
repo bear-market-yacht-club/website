@@ -20,10 +20,10 @@ const Home: NextPage = () => {
       </div>
       <Button
         // href="/apply"
-        href="https://www.premint.xyz/bear-market-yacht-club/"
+        href="/mint"
         className="animate-[wiggle_3s_linear_infinite] glow-on-hover"
       >
-        Premint
+        Mint
       </Button>
     </Layout>
   );
