@@ -70,12 +70,12 @@ const Mint: NextPage = () => {
     const setDuration = () => {
       const d = intervalToDuration({
         start: new Date(),
-        end: new Date("2022-10-25T23:35:00"),
+        end: new Date("2022-10-26T16:20:00"),
       });
 
       setMintDuration(d);
       setMintTime(
-        compareAsc(new Date("2022-10-25T23:35:00"), new Date()) === -1
+        compareAsc(new Date("2022-10-26T16:20:00"), new Date()) === -1
       );
     };
     setDuration();
