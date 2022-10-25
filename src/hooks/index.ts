@@ -7,7 +7,7 @@ const factoryInterface = new ethers.utils.Interface(
   JSON.stringify(NFTFactoryABI)
 );
 const bmyc = new Contract(
-  "0xF6e335db585B43a768FD3A450e858Ab5886E5Ba9",
+  "0x8e6F6a11E33375076FC76Bdb30FE218f588E5749",
   factoryInterface
 );
 
