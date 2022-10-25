@@ -138,11 +138,6 @@ const Mint: NextPage = () => {
               }
             />
           </div>
-          {!agreed && (
-            <div>
-              You must agree to the Terms of Service and Privacy Policy to mint
-            </div>
-          )}
           {state.status === "None" ? (
             <div>
               <div className="flex gap-8">
@@ -194,11 +189,13 @@ const Mint: NextPage = () => {
               </div>
               {!mintTime ? (
                 <div className="mt-4 text-red-500">Not minting time yet</div>
+              ) : !account ? (
+                <div className="mt-4 text-red-500">Connect wallet to mint</div>
               ) : (
-                !account &&
-                agreed && (
+                !agreed && (
                   <div className="mt-4 text-red-500">
-                    Connect wallet to mint
+                    You must agree to the Terms of Service and Privacy Policy to
+                    mint
                   </div>
                 )
               )}
