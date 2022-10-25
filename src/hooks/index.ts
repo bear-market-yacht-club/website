@@ -6,8 +6,8 @@ import NFTFactoryABI from "../abis/BMYC.json";
 const factoryInterface = new ethers.utils.Interface(
   JSON.stringify(NFTFactoryABI)
 );
-const factoryContract = new Contract(
-  "0x5bf5bcc5362f88721167c1068b58c60cad075aac",
+const bmyc = new Contract(
+  "0xae40f4D1CfeAf09bdd6348F2C0E9d7a5B03D3Dc0",
   factoryInterface
 );
 
@@ -18,12 +18,13 @@ export function listenToEvents(
 ) {
   contract.on(eventName, callback);
 }
-export function useContractMethod(methodName: string) {
-  const { state, send } = useContractFunction(factoryContract, methodName, {});
+
+export function useBMYCMethod(methodName: string) {
+  const { state, send } = useContractFunction(bmyc, methodName, {});
   return { state, send };
 }
 
 export function useMint() {
-  const { state, send } = useContractFunction(factoryContract, "mint", {});
+  const { state, send } = useContractFunction(bmyc, "mint");
   return { state, send };
 }
