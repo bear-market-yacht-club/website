@@ -13,6 +13,7 @@ import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 import { useIsWhitelistUsed, useMint } from "../hooks";
 import { trpc } from "../utils/trpc";
+import { Modal } from "react-responsive-modal";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
   return (
@@ -239,21 +240,6 @@ const Mint: NextPage = () => {
             ) : state.status === "PendingSignature" ||
               state.status === "Mining" ? (
               <div className="text-yellow">Confirming Transaction</div>
-            ) : state.status === "Success" ? (
-              <div className="flex flex-col items-center gap-2">
-                <div className="text-green-400 text-3xl">Success!</div>
-                <div>Enter your email to subscribe to our club list</div>
-                <div className="text-xl">
-                  <input
-                    ref={emailRef}
-                    placeholder="email@example.com"
-                    type="text"
-                  />
-                </div>
-                <Button onClick={subscribe}>Submit</Button>
-                {emailStatus === "error" && <div>Invalid Email</div>}
-                {emailStatus === "success" && <div>Submitted</div>}
-              </div>
             ) : state.status === "Fail" ? (
               <div className="text-red-500">
                 {state.errorCode}: {state.errorMessage}
@@ -263,6 +249,57 @@ const Mint: NextPage = () => {
             )}
           </div>
         )}
+        <Modal
+          open={state.status === "Success"}
+          onClose={() => (state.status = "None")}
+          center
+          styles={{
+            modal: {
+              backgroundColor: "black",
+              border: "2px solid #bfc500",
+              borderRadius: "1em",
+            },
+            closeButton: {
+              top: "1.5em",
+              right: "1.5em",
+              fill: "#bfc500",
+            },
+          }}
+        >
+          <div className="flex flex-col items-center">
+            <div className="text-green-400 text-3xl">Success!</div>
+            <div className="flex flex-col items-center gap-2">
+              <a
+                className="my-4 no-underline"
+                rel="noreferrer"
+                target="_blank"
+                href={`https://twitter.com/intent/tweet?text=I just minted ${quantity} bear${
+                  quantity > 1 ? "s" : ""
+                }!! Mint is live! bmyc.io/mint 🐻 @BearMarketYC`}
+              >
+                <Button>Tweet</Button>
+              </a>
+              <hr className="h-2 w-full text-white" />
+              <div>Enter your email to subscribe to our club list</div>
+              <div className="flex gap-4 text-xl">
+                <input
+                  className=""
+                  ref={emailRef}
+                  placeholder="email@example.com"
+                  type="text"
+                />
+                <Button
+                  className="p-1 bg-transparent text-yellow border-2 !border-solid border-yellow"
+                  onClick={subscribe}
+                >
+                  Submit
+                </Button>
+              </div>
+              {emailStatus === "error" && <div>Invalid Email</div>}
+              {emailStatus === "success" && <div>Submitted</div>}
+            </div>
+          </div>
+        </Modal>
       </div>
     </Layout>
   );
