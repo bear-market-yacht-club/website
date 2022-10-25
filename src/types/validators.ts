@@ -7,6 +7,10 @@ export const applyValidator = z.object({
   ethAddress: z.string().trim().startsWith("0x").length(42).optional(),
 });
 
+export const emailValidator = z.object({
+  email: z.string().email(),
+});
+
 export const getApplicationValidator = z.object({
   ethAddress: z.string().startsWith("0x").length(42).optional(),
   twitterHandle: z.string().optional(),
@@ -19,7 +23,6 @@ export const rsvpTrack = z.object({
 export const getByTwitterValidator = z.object({
   twitterHandle: z.string().trim().min(1),
 });
-
 
 export const highscoreValidator = z.object({
   twitter_handle: z.string().trim().min(1),

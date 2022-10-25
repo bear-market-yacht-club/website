@@ -8,12 +8,14 @@ import { mint } from "./mint";
 import { flap } from "./flap";
 import { fudballs } from "./fudballs";
 import { gameSettings } from "./game_settings";
+import { mailing } from "./mailing";
 
 export const appRouter = createRouter()
   .transformer(superjson)
   .merge("form.", apply)
   .merge("track.", tracking)
   .merge("mint.", mint)
+  .merge("mailing.", mailing)
   .merge("flap.", flap)
   .merge("fudballs.", fudballs)
   .merge("game_settings.", gameSettings);

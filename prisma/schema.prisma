@@ -81,3 +81,9 @@ model game_settings {
 model whitelists {
     address             String @id
 }
+
+model mailing_list {
+    email           String @id
+    signup_date     DateTime @default(now())
+    twitter_handle  String?
+}

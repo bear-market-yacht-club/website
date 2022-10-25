@@ -6,12 +6,12 @@ import MerkleTree from "merkletreejs";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import Checkbox from "../components/Checkbox";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
-import { useMint } from "../hooks";
+import { useIsWhitelistUsed, useMint } from "../hooks";
 import { trpc } from "../utils/trpc";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
@@ -31,10 +31,17 @@ const Mint: NextPage = () => {
   const { send, state } = useMint();
   const { data: whitelistedAddresses } = trpc.useQuery(["mint.whitelists"]);
   const [mintTime, setMintTime] = useState(false);
+  const isWhitelistUsed = useIsWhitelistUsed(account);
+  const { mutate: addEmail, status: emailStatus } =
+    trpc.useMutation("mailing.addEmail");
+  const emailRef = useRef<HTMLInputElement>(null);
+  const [twitterHandle, setTwitterHandle] = useState<string | undefined>(
+    undefined
+  );
 
   const proof = getMerkleProof(account || "0x");
   const merkleTree = getMerkleTree();
-  const whitelisted = merkleTree.verify(
+  let whitelisted = merkleTree.verify(
     proof,
     keccak256(account || "0x"),
     merkleTree.getHexRoot()
@@ -61,12 +68,12 @@ const Mint: NextPage = () => {
     const setDuration = () => {
       const d = intervalToDuration({
         start: new Date(),
-        end: new Date("2022-10-26T20:20:00"),
+        end: new Date("2022-10-26T16:20:00"),
       });
 
       setMintDuration(d);
       setMintTime(
-        compareAsc(new Date("2022-10-26T20:20:00"), new Date()) === -1
+        compareAsc(new Date("2022-10-26T16:20:00"), new Date()) === -1
       );
     };
     setDuration();
@@ -74,10 +81,24 @@ const Mint: NextPage = () => {
       setDuration();
     }, 1000);
 
+    const th = localStorage
+      .getItem("twitter_handle")
+      ?.toLowerCase()
+      .trim()
+      .replace(/^@+/, "")
+      .trim();
+    if (th) {
+      localStorage.setItem("twitter_handle", th);
+      setTwitterHandle(th);
+    }
+
     return () => clearInterval(intervalId);
   }, []);
 
   const onMint = () => {
+    if (isWhitelistUsed) {
+      whitelisted = false;
+    }
     send(quantity, proof, {
       value: utils.parseEther(
         (0.06 * (quantity - (whitelisted ?? false ? 1 : 0))).toString()
@@ -91,6 +112,15 @@ const Mint: NextPage = () => {
     newQuantity = Math.max(0, newQuantity);
     newQuantity = Math.min(10, newQuantity);
     setQuantity(newQuantity);
+  };
+
+  const subscribe = () => {
+    if (emailRef.current?.value) {
+      addEmail({
+        email: emailRef.current.value,
+        twitterHandle,
+      });
+    }
   };
 
   return (
@@ -112,14 +142,16 @@ const Mint: NextPage = () => {
           <TimeSlot unit="minutes" amount={mintDuration?.minutes} />
           <TimeSlot unit="seconds" amount={mintDuration?.seconds} />
         </div>
-        <div className="md:mt-8 flex flex-col w-[75%] lg:w-1/4 gap-4 justify-between items-center text-center">
+        <div className="md:mt-8 flex flex-col gap-4 justify-between items-center text-center">
           {whitelisted === null ? (
             <p>
               Check if you&apos;re whitelisted by connecting your MetaMask
               wallet
             </p>
-          ) : whitelisted === true ? (
+          ) : whitelisted === true && !isWhitelistUsed ? (
             <p>You have been whitelisted!</p>
+          ) : isWhitelistUsed ? (
+            <p>You have already claimed your free mint</p>
           ) : (
             <></>
           )}
@@ -140,7 +172,7 @@ const Mint: NextPage = () => {
               />
             </div>
             {state.status === "None" ? (
-              <div>
+              <div className="flex flex-col items-center">
                 <div className="flex gap-8">
                   <div className="flex items-stretch text-yellow">
                     <input
@@ -182,8 +214,9 @@ const Mint: NextPage = () => {
                     </div>
                   </div>
                   <Button
+                    className=""
                     onClick={onMint}
-                    disabled={!agreed || whitelisted !== true || !mintTime}
+                    disabled={!agreed || !mintTime || quantity < 1}
                   >
                     Mint
                   </Button>
@@ -192,20 +225,39 @@ const Mint: NextPage = () => {
                   <div className="mt-4 text-red-500">
                     Connect wallet to mint
                   </div>
+                ) : !agreed ? (
+                  <div className="mt-4 text-red-500">
+                    You must agree to the Terms of Service and Privacy Policy to
+                    mint
+                  </div>
                 ) : (
-                  !agreed && (
-                    <div className="mt-4 text-red-500">
-                      You must agree to the Terms of Service and Privacy Policy
-                      to mint
-                    </div>
+                  quantity < 1 && (
+                    <div className="mt-4 text-red-500">Cannot mint 0 NFTs</div>
                   )
                 )}
               </div>
-            ) : state.status === "Mining" ||
-              state.status === "PendingSignature" ? (
+            ) : state.status === "PendingSignature" ||
+              state.status === "Mining" ? (
               <div className="text-yellow">Confirming Transaction</div>
             ) : state.status === "Success" ? (
-              <div className="text-green-400">Success!</div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="text-green-400 text-3xl">Success!</div>
+                <div>Enter your email to subscribe to our club list</div>
+                <div className="text-xl">
+                  <input
+                    ref={emailRef}
+                    placeholder="email@example.com"
+                    type="text"
+                  />
+                </div>
+                <Button onClick={subscribe}>Submit</Button>
+                {emailStatus === "error" && <div>Invalid Email</div>}
+                {emailStatus === "success" && <div>Submitted</div>}
+              </div>
+            ) : state.status === "Fail" ? (
+              <div className="text-red-500">
+                {state.errorCode}: {state.errorMessage}
+              </div>
             ) : (
               <div className="text-red-500">Unknown error occured</div>
             )}
