@@ -11,7 +11,7 @@ import Button from "../components/Button";
 import Checkbox from "../components/Checkbox";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
-import { useIsWhitelistUsed, useMint } from "../hooks";
+import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
 
@@ -33,6 +33,7 @@ const Mint: NextPage = () => {
   const { data: whitelistedAddresses } = trpc.useQuery(["mint.whitelists"]);
   const [mintTime, setMintTime] = useState(false);
   const isWhitelistUsed = useIsWhitelistUsed(account);
+  const totalSupply = useTotalSupply();
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
   const emailRef = useRef<HTMLInputElement>(null);
@@ -69,12 +70,12 @@ const Mint: NextPage = () => {
     const setDuration = () => {
       const d = intervalToDuration({
         start: new Date(),
-        end: new Date("2022-10-26T16:20:00"),
+        end: new Date("2022-10-25T23:35:00"),
       });
 
       setMintDuration(d);
       setMintTime(
-        compareAsc(new Date("2022-10-26T16:20:00"), new Date()) === -1
+        compareAsc(new Date("2022-10-25T23:35:00"), new Date()) === -1
       );
     };
     setDuration();
@@ -137,16 +138,24 @@ const Mint: NextPage = () => {
           />
         </div>
         <Heading>
-          Minting {mintTime && "Live"}
+          Minting {mintTime && "Live!"}
           {!mintTime && ":"}
         </Heading>
-        <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
-          <TimeSlot unit="days" amount={mintDuration?.days} />
-          <TimeSlot unit="hours" amount={mintDuration?.hours} />
-          <TimeSlot unit="minutes" amount={mintDuration?.minutes} />
-          <TimeSlot unit="seconds" amount={mintDuration?.seconds} />
-        </div>
-        <div className="md:mt-8 flex flex-col gap-4 justify-between items-center text-center">
+        {!mintTime ? (
+          <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
+            <TimeSlot unit="days" amount={mintDuration?.days} />
+            <TimeSlot unit="hours" amount={mintDuration?.hours} />
+            <TimeSlot unit="minutes" amount={mintDuration?.minutes} />
+            <TimeSlot unit="seconds" amount={mintDuration?.seconds} />
+          </div>
+        ) : (
+          <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
+            <div className="font-black text-8xl md:text-5xl">
+              {totalSupply ?? 0} / 5555
+            </div>
+          </div>
+        )}
+        <div className="md:mt-4 flex flex-col gap-4 justify-between items-center text-center">
           {whitelisted === null ? (
             <p>
               Check if you&apos;re whitelisted by connecting your MetaMask

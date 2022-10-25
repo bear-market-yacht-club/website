@@ -1,4 +1,4 @@
-import { ethers } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import { Contract } from "@ethersproject/contracts";
 import { useContractFunction, useCall } from "@usedapp/core";
 import NFTFactoryABI from "../abis/BMYC.json";
@@ -10,6 +10,20 @@ const bmyc = new Contract(
   "0x8e6F6a11E33375076FC76Bdb30FE218f588E5749",
   factoryInterface
 );
+
+export function useTotalSupply(): number | undefined {
+  const { value, error } =
+    useCall({
+      contract: bmyc,
+      method: "totalSupply", // Method to be called
+      args: [], // Method arguments - address to be checked for balance
+    }) ?? {};
+  if (error) {
+    console.error(error.message);
+    return undefined;
+  }
+  return value ? (value[0] as BigNumber).toNumber() : undefined;
+}
 
 export function useIsWhitelistUsed(
   address: string | undefined
