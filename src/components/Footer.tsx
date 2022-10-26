@@ -9,7 +9,10 @@ const links: {
 }[] = [
   { href: "https://www.discord.gg/28x4ysCtXW", src: "discord.svg" },
   { href: "https://www.twitter.com/bearmarketyc", src: "twitter.svg" },
-  // { href: "https://www.opensea.io/bearmarketyc", src: "opensea.svg" },
+  {
+    href: "https://opensea.io/collection/bear-market-yacht-club",
+    src: "opensea.svg",
+  },
 ];
 
 const Footer: FC = ({}) => {
