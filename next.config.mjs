@@ -1,4 +1,4 @@
-import { env } from "./src/env/server.mjs";
+import { withAxiom } from "next-axiom";
 
 /**
  * Don't be scared of the generics here.
@@ -12,19 +12,21 @@ function defineNextConfig(config) {
   return config;
 }
 
-export default defineNextConfig({
-  reactStrictMode: true,
-  swcMinify: true,
-  redirects: () => [
-    {
-      source: "/apply",
-      destination: "https://www.premint.xyz/bear-market-yacht-club/",
-      permanent: true,
-    },
-    {
-      source: "/rsvp",
-      destination: "https://www.premint.xyz/bear-market-yacht-club/",
-      permanent: true,
-    },
-  ],
-});
+export default defineNextConfig(
+  withAxiom({
+    reactStrictMode: true,
+    swcMinify: true,
+    redirects: () => [
+      {
+        source: "/apply",
+        destination: "https://www.premint.xyz/bear-market-yacht-club/",
+        permanent: true,
+      },
+      {
+        source: "/rsvp",
+        destination: "https://www.premint.xyz/bear-market-yacht-club/",
+        permanent: true,
+      },
+    ],
+  })
+);

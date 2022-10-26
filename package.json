@@ -25,6 +25,7 @@
     "merkletreejs": "^0.2.32",
     "next": "12.2.5",
     "next-auth": "^4.10.3",
+    "next-axiom": "^0.15.0",
     "phaser": "^3.55.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

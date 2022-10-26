@@ -56,6 +56,10 @@ const Mint: NextPage = () => {
     ).toString()
   );
 
+  useEffect(() => {
+    console.log({ whitelisted });
+  }, [whitelisted]);
+
   function getMerkleTree(): MerkleTree {
     if (whitelistedAddresses) {
       const leafNodes = whitelistedAddresses.map((addr) =>
