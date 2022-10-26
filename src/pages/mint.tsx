@@ -264,12 +264,12 @@ const Mint: NextPage = () => {
                 {state.errorCode}: {state.errorMessage}
               </div>
             ) : (
-              <div className="text-red-500">Unknown error occured</div>
+              <div></div>
             )}
           </div>
         )}
         <Modal
-          open={state.status === "Success"}
+          open={state.status === "None"}
           onClose={() => (state.status = "None")}
           center
           styles={{
@@ -286,7 +286,12 @@ const Mint: NextPage = () => {
           }}
         >
           <div className="flex flex-col items-center">
-            <div className="text-green-400 text-3xl">Success!</div>
+            <div className="text-green-400 text-3xl mb-2">Success!</div>
+            <div className="text-center">
+              Welcome to our big happy bear fam!
+              <br />
+              Stay tuned for the art reveal!
+            </div>
             <div className="flex flex-col items-center gap-2">
               <a
                 className="my-4 no-underline"
@@ -294,7 +299,7 @@ const Mint: NextPage = () => {
                 target="_blank"
                 href={`https://twitter.com/intent/tweet?text=I just minted ${quantity} bear${
                   quantity > 1 ? "s" : ""
-                }!! Mint is live! bmyc.io/mint 🐻 @BearMarketYC`}
+                }!! Mint is live @ bmyc.io/mint! 🐻 @BearMarketYC`}
               >
                 <Button>Tweet</Button>
               </a>
