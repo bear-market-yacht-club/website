@@ -45,20 +45,24 @@ const About: NextPage = () => {
           exclusive club member areas.
         </p>
         <Heading>Mint Info</Heading>
-        <table className="w-full mb-8">
-          <td className="font-bold text-yellow">
-            <tr>Supply</tr>
-            <tr>Network</tr>
-            <tr>Mint Price</tr>
-            <tr>Mint Date</tr>
-          </td>
-          <td>
-            <tr>5555</tr>
-            <tr>Ethereum</tr>
-            <tr>0.06 ETH</tr>
-            <tr>October 26, 2022 2PM EST</tr>
-          </td>
-        </table>
+        <div className="w-full mb-8 flex gap-4">
+          <div className="flex-grow w-full font-bold text-yellow">
+            <p>Supply</p>
+            <p>Network</p>
+            <p>Mint Price</p>
+            <p>Max Mint Per Tx</p>
+            <p>Free Mint Per Whitelist</p>
+            <p>Mint Date</p>
+          </div>
+          <div className="">
+            <p>5555</p>
+            <p>Ethereum</p>
+            <p>0.06 ETH</p>
+            <p>10</p>
+            <p>1</p>
+            <p>October 26, 2022 2PM EST</p>
+          </div>
+        </div>
         <Heading>Crew Members</Heading>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 auto-cols-max content-start lg:w-max font-bold mb-7 gap-4">
           {team.map((member, i) => (

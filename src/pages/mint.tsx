@@ -14,6 +14,7 @@ import Layout from "../components/Layout";
 import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
+import { log } from "next-axiom";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
   return (
@@ -57,8 +58,8 @@ const Mint: NextPage = () => {
   );
 
   useEffect(() => {
-    console.log({ account, whitelisted });
-  }, [whitelisted]);
+    log.debug(`${account} ${whitelisted}`);
+  }, [account]);
 
   function getMerkleTree(): MerkleTree {
     if (whitelistedAddresses) {
@@ -109,7 +110,7 @@ const Mint: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(state);
+    log.debug(JSON.stringify(state));
   }, [state.status]);
 
   const onMint = async () => {
