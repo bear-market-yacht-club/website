@@ -1,4 +1,4 @@
-import { useEthers } from "@usedapp/core";
+import { Goerli, useEthers } from "@usedapp/core";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { utils } from "ethers";
 import { keccak256 } from "ethers/lib/utils";
@@ -25,7 +25,7 @@ const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
 };
 
 const Mint: NextPage = () => {
-  const { account } = useEthers();
+  const { account, chainId } = useEthers();
   const [agreed, setAgreed] = useState(false);
   const [mintDuration, setMintDuration] = useState<Duration>();
   const [quantity, setQuantity] = useState(0);
@@ -138,8 +138,11 @@ const Mint: NextPage = () => {
           />
         </div>
         <Heading>
-          Minting {mintTime && "Live!"}
-          {!mintTime && ":"}
+          {!mintTime ? (
+            "Minting:"
+          ) : (
+            <span className="text-yellow">Minting Live!</span>
+          )}
         </Heading>
         {!mintTime ? (
           <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
@@ -237,6 +240,10 @@ const Mint: NextPage = () => {
                 {!account ? (
                   <div className="mt-4 text-red-500">
                     Connect wallet to mint
+                  </div>
+                ) : chainId !== Goerli.chainId ? (
+                  <div className="mt-4 text-red-500">
+                    Change network to Ethereum mainnet to mint
                   </div>
                 ) : !agreed ? (
                   <div className="mt-4 text-red-500">
