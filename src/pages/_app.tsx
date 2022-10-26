@@ -2,7 +2,7 @@
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
-import { Config, DAppProvider, Goerli, Mainnet, Mumbai } from "@usedapp/core";
+import { Config, DAppProvider, Mainnet } from "@usedapp/core";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
@@ -16,13 +16,10 @@ import * as gtag from "../types/gtag";
 import "react-responsive-modal/styles.css";
 
 const DAppConfig: Config = {
-  // readOnlyChainId: Mainnet.chainId,
-  readOnlyChainId: Goerli.chainId,
+  readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
     [Mainnet.chainId]:
       "https://mainnet.infura.io/v3/b04d2052bb564fe1b7013bd024f9c8ba",
-    [Goerli.chainId]:
-      "https://goerli.infura.io/v3/b04d2052bb564fe1b7013bd024f9c8ba",
   },
 };
 

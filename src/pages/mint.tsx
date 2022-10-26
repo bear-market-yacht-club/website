@@ -1,4 +1,4 @@
-import { Goerli, useEthers } from "@usedapp/core";
+import { Mainnet, useEthers } from "@usedapp/core";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { utils } from "ethers";
 import { keccak256 } from "ethers/lib/utils";
@@ -241,7 +241,7 @@ const Mint: NextPage = () => {
                   <div className="mt-4 text-red-500">
                     Connect wallet to mint
                   </div>
-                ) : chainId !== Goerli.chainId ? (
+                ) : chainId !== Mainnet.chainId ? (
                   <div className="mt-4 text-red-500">
                     Change network to Ethereum mainnet to mint
                   </div>
