@@ -269,7 +269,7 @@ const Mint: NextPage = () => {
           </div>
         )}
         <Modal
-          open={state.status === "None"}
+          open={state.status === "Success"}
           onClose={() => (state.status = "None")}
           center
           styles={{
