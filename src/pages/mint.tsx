@@ -1,8 +1,6 @@
 import { Mainnet, useEthers, useEtherBalance } from "@usedapp/core";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { utils } from "ethers";
-import { keccak256 } from "ethers/lib/utils";
-import MerkleTree from "merkletreejs";
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +13,7 @@ import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
 import { log } from "next-axiom";
+import { useRouter } from "next/router";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
   return (
@@ -26,13 +25,17 @@ const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
 };
 
 const Mint: NextPage = () => {
+  const router = useRouter();
   const { account, chainId } = useEthers();
   const etherBalance = useEtherBalance(account);
   const [agreed, setAgreed] = useState(false);
   const [mintDuration, setMintDuration] = useState<Duration>();
   const [quantity, setQuantity] = useState(3);
   const { send, state } = useMint();
-  const { data: whitelistedAddresses } = trpc.useQuery(["mint.whitelists"]);
+  const { data: mintData } = trpc.useQuery([
+    "mint.merkle-proof",
+    { ethAddress: account || "0x" },
+  ]);
   const [mintTime, setMintTime] = useState(false);
   const isWhitelistUsed = useIsWhitelistUsed(account);
   const totalSupply = useTotalSupply();
@@ -42,41 +45,19 @@ const Mint: NextPage = () => {
   const [twitterHandle, setTwitterHandle] = useState<string | undefined>(
     undefined
   );
+  let merkleProof: string[],
+    whitelisted = false;
+  if (mintData) {
+    ({ merkleProof, whitelisted } = mintData);
+  }
 
-  const proof = getMerkleProof(account || "0x");
-  const merkleTree = getMerkleTree();
-  const whitelisted = merkleTree.verify(
-    proof,
-    keccak256(account || "0x"),
-    merkleTree.getHexRoot()
-  );
   const mintCost = utils.parseEther(
-    (
-      0.06 *
-      (quantity - (isWhitelistUsed || (whitelisted ?? false) ? 1 : 0))
-    ).toString()
+    (0.06 * (quantity - (whitelisted && !isWhitelistUsed ? 1 : 0))).toString()
   );
 
   useEffect(() => {
-    log.debug(`${account} ${whitelisted}`);
+    log.debug(JSON.stringify({ account, whitelisted }));
   }, [account]);
-
-  function getMerkleTree(): MerkleTree {
-    if (whitelistedAddresses) {
-      const leafNodes = whitelistedAddresses.map((addr) =>
-        keccak256(addr.address.toLowerCase())
-      );
-      return new MerkleTree(leafNodes, keccak256, {
-        sortPairs: true,
-      });
-    } else {
-      return new MerkleTree([], "");
-    }
-  }
-
-  function getMerkleProof(addr: string): string[] {
-    return getMerkleTree().getHexProof(keccak256(addr));
-  }
 
   useEffect(() => {
     const setDuration = () => {
@@ -114,7 +95,7 @@ const Mint: NextPage = () => {
   }, [state.status]);
 
   const onMint = async () => {
-    const tx = await send(quantity, proof, {
+    const tx = await send(quantity, merkleProof, {
       value: mintCost,
       gasLimit: 200000,
     });
@@ -286,7 +267,9 @@ const Mint: NextPage = () => {
         )}
         <Modal
           open={state.status === "Success"}
-          onClose={() => (state.status = "None")}
+          onClose={() => {
+            router.reload();
+          }}
           center
           styles={{
             modal: {

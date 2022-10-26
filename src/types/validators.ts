@@ -7,6 +7,10 @@ export const applyValidator = z.object({
   ethAddress: z.string().trim().startsWith("0x").length(42).optional(),
 });
 
+export const addressValidator = z.object({
+  ethAddress: z.string().trim().startsWith("0x").length(42),
+});
+
 export const emailValidator = z.object({
   email: z.string().email(),
 });
