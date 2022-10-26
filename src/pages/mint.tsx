@@ -14,7 +14,6 @@ import Layout from "../components/Layout";
 import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
-import { zonedTimeToUtc } from "date-fns-tz";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
   return (
@@ -30,7 +29,7 @@ const Mint: NextPage = () => {
   const etherBalance = useEtherBalance(account);
   const [agreed, setAgreed] = useState(false);
   const [mintDuration, setMintDuration] = useState<Duration>();
-  const [quantity, setQuantity] = useState(2);
+  const [quantity, setQuantity] = useState(3);
   const { send, state } = useMint();
   const { data: whitelistedAddresses } = trpc.useQuery(["mint.whitelists"]);
   const [mintTime, setMintTime] = useState(false);
@@ -105,11 +104,16 @@ const Mint: NextPage = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  const onMint = () => {
-    send(quantity, proof, {
+  useEffect(() => {
+    console.log(state);
+  }, [state.status]);
+
+  const onMint = async () => {
+    const tx = await send(quantity, proof, {
       value: mintCost,
       gasLimit: 200000,
     });
+    console.log(tx);
   };
 
   const onQuantityChange = (value: ChangeEvent<HTMLInputElement>) => {
