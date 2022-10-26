@@ -1,4 +1,4 @@
-import { Mainnet, useEthers } from "@usedapp/core";
+import { Mainnet, useEthers, useEtherBalance } from "@usedapp/core";
 import { compareAsc, intervalToDuration } from "date-fns";
 import { utils } from "ethers";
 import { keccak256 } from "ethers/lib/utils";
@@ -26,9 +26,10 @@ const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
 
 const Mint: NextPage = () => {
   const { account, chainId } = useEthers();
+  const etherBalance = useEtherBalance(account);
   const [agreed, setAgreed] = useState(false);
   const [mintDuration, setMintDuration] = useState<Duration>();
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(2);
   const { send, state } = useMint();
   const { data: whitelistedAddresses } = trpc.useQuery(["mint.whitelists"]);
   const [mintTime, setMintTime] = useState(false);
@@ -43,10 +44,16 @@ const Mint: NextPage = () => {
 
   const proof = getMerkleProof(account || "0x");
   const merkleTree = getMerkleTree();
-  let whitelisted = merkleTree.verify(
+  const whitelisted = merkleTree.verify(
     proof,
     keccak256(account || "0x"),
     merkleTree.getHexRoot()
+  );
+  const mintCost = utils.parseEther(
+    (
+      0.06 *
+      (quantity - (isWhitelistUsed || (whitelisted ?? false) ? 1 : 0))
+    ).toString()
   );
 
   function getMerkleTree(): MerkleTree {
@@ -98,20 +105,15 @@ const Mint: NextPage = () => {
   }, []);
 
   const onMint = () => {
-    if (isWhitelistUsed) {
-      whitelisted = false;
-    }
     send(quantity, proof, {
-      value: utils.parseEther(
-        (0.06 * (quantity - (whitelisted ?? false ? 1 : 0))).toString()
-      ),
+      value: mintCost,
       gasLimit: 200000,
     });
   };
 
   const onQuantityChange = (value: ChangeEvent<HTMLInputElement>) => {
     let newQuantity = parseInt(value.currentTarget.value) || 0;
-    newQuantity = Math.max(0, newQuantity);
+    newQuantity = Math.max(1, newQuantity);
     newQuantity = Math.min(10, newQuantity);
     setQuantity(newQuantity);
   };
@@ -193,7 +195,7 @@ const Mint: NextPage = () => {
                   <div className="flex items-stretch text-yellow">
                     <input
                       className="bg-black border-b-yellow border-b-2 w-12 text-3xl text-center"
-                      defaultValue={0}
+                      defaultValue={10}
                       min={1}
                       max={10}
                       value={quantity}
@@ -217,7 +219,7 @@ const Mint: NextPage = () => {
                       <svg
                         className="flex-grow cursor-pointer"
                         onClick={() =>
-                          setQuantity((prev) => Math.max(0, prev - 1))
+                          setQuantity((prev) => Math.max(1, prev - 1))
                         }
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512"
@@ -232,7 +234,9 @@ const Mint: NextPage = () => {
                   <Button
                     className=""
                     onClick={onMint}
-                    disabled={!agreed || !mintTime || quantity < 1}
+                    disabled={
+                      !agreed || !mintTime || etherBalance?.lt(mintCost)
+                    }
                   >
                     Mint
                   </Button>
@@ -251,8 +255,10 @@ const Mint: NextPage = () => {
                     mint
                   </div>
                 ) : (
-                  quantity < 1 && (
-                    <div className="mt-4 text-red-500">Cannot mint 0 NFTs</div>
+                  etherBalance?.lt(mintCost) && (
+                    <div className="mt-4 text-red-500">
+                      Not enough ether. Mint price is 0.06 eth per bear
+                    </div>
                   )
                 )}
               </div>
