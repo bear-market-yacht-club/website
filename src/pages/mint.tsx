@@ -180,81 +180,76 @@ const Mint: NextPage = () => {
                 }
               />
             </div>
-            {state.status === "None" ? (
-              <div className="flex flex-col items-center">
-                <div className="flex gap-8">
-                  <div className="flex items-stretch text-yellow">
-                    <input
-                      className="bg-black border-b-yellow border-b-2 w-12 text-3xl text-center"
-                      defaultValue={10}
-                      min={1}
-                      max={10}
-                      value={quantity}
-                      type="number"
-                      onChange={onQuantityChange}
-                    />
-                    <div className="flex flex-col w-6">
-                      <svg
-                        className="flex-grow cursor-pointer"
-                        onClick={() =>
-                          setQuantity((prev) => Math.min(10, prev + 1))
-                        }
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                      >
-                        <path
-                          fill="#bfc500"
-                          d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
-                        />
-                      </svg>
-                      <svg
-                        className="flex-grow cursor-pointer"
-                        onClick={() =>
-                          setQuantity((prev) => Math.max(1, prev - 1))
-                        }
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 448 512"
-                      >
-                        <path
-                          fill="#bfc500"
-                          d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
-                        />
-                      </svg>
-                    </div>
+            <div className="flex flex-col items-center">
+              <div className="flex gap-8">
+                <div className="flex items-stretch text-yellow">
+                  <input
+                    className="bg-black border-b-yellow border-b-2 w-12 text-3xl text-center"
+                    defaultValue={10}
+                    min={1}
+                    max={10}
+                    value={quantity}
+                    type="number"
+                    onChange={onQuantityChange}
+                  />
+                  <div className="flex flex-col w-6">
+                    <svg
+                      className="flex-grow cursor-pointer"
+                      onClick={() =>
+                        setQuantity((prev) => Math.min(10, prev + 1))
+                      }
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 512 512"
+                    >
+                      <path
+                        fill="#bfc500"
+                        d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+                      />
+                    </svg>
+                    <svg
+                      className="flex-grow cursor-pointer"
+                      onClick={() =>
+                        setQuantity((prev) => Math.max(1, prev - 1))
+                      }
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 448 512"
+                    >
+                      <path
+                        fill="#bfc500"
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                      />
+                    </svg>
                   </div>
-                  <Button
-                    className=""
-                    onClick={onMint}
-                    disabled={
-                      !agreed || !mintTime || etherBalance?.lt(mintCost)
-                    }
-                  >
-                    Mint
-                  </Button>
                 </div>
-                {!account ? (
-                  <div className="mt-4 text-red-500">
-                    Connect wallet to mint
-                  </div>
-                ) : chainId !== Mainnet.chainId ? (
-                  <div className="mt-4 text-red-500">
-                    Change network to Ethereum mainnet to mint
-                  </div>
-                ) : !agreed ? (
-                  <div className="mt-4 text-red-500">
-                    You must agree to the Terms of Service and Privacy Policy to
-                    mint
-                  </div>
-                ) : (
-                  etherBalance?.lt(mintCost) && (
-                    <div className="mt-4 text-red-500">
-                      Not enough ether. Mint price is 0.06 eth per bear
-                    </div>
-                  )
-                )}
+                <Button
+                  className=""
+                  onClick={onMint}
+                  disabled={!agreed || !mintTime || etherBalance?.lt(mintCost)}
+                >
+                  Mint
+                </Button>
               </div>
-            ) : state.status === "PendingSignature" ||
-              state.status === "Mining" ? (
+              {!account ? (
+                <div className="mt-4 text-red-500">Connect wallet to mint</div>
+              ) : chainId !== Mainnet.chainId ? (
+                <div className="mt-4 text-red-500">
+                  Change network to Ethereum mainnet to mint
+                </div>
+              ) : !agreed ? (
+                <div className="mt-4 text-red-500">
+                  You must agree to the Terms of Service and Privacy Policy to
+                  mint
+                </div>
+              ) : (
+                etherBalance?.lt(mintCost) && (
+                  <div className="mt-4 text-red-500">
+                    Not enough ether. Mint price is 0.06 eth per bear
+                  </div>
+                )
+              )}
+            </div>
+            {state.status === "PendingSignature" ||
+            state.status === "Mining" ? (
               <div className="text-yellow">Confirming Transaction</div>
             ) : state.status === "Fail" ? (
               <div className="text-red-500">
