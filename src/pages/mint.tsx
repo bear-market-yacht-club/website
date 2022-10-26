@@ -57,7 +57,7 @@ const Mint: NextPage = () => {
   );
 
   useEffect(() => {
-    console.log({ whitelisted });
+    console.log({ account, whitelisted });
   }, [whitelisted]);
 
   function getMerkleTree(): MerkleTree {
