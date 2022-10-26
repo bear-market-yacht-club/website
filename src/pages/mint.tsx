@@ -14,6 +14,7 @@ import Layout from "../components/Layout";
 import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 const TimeSlot = ({ unit, amount }: { unit: string; amount?: number }) => {
   return (
@@ -75,15 +76,15 @@ const Mint: NextPage = () => {
 
   useEffect(() => {
     const setDuration = () => {
+      const nowUTC = new Date();
+      const mintTimeUTC = new Date("2022-10-26T20:20:00Z");
       const d = intervalToDuration({
-        start: new Date(),
-        end: new Date("2022-10-26T16:20:00"),
+        start: nowUTC,
+        end: mintTimeUTC,
       });
 
       setMintDuration(d);
-      setMintTime(
-        compareAsc(new Date("2022-10-26T16:20:00"), new Date()) === -1
-      );
+      setMintTime(compareAsc(mintTimeUTC, nowUTC) === -1);
     };
     setDuration();
     const intervalId = setInterval(() => {
