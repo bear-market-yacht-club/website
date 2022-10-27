@@ -23,7 +23,6 @@ const pages = [
   { title: "Bemes", route: "/memes" },
   { title: "Mint", route: "/mint" },
   { title: "Club Schedule", route: "/roadmap" },
-  { title: "MAYC", route: "/mayc" },
   { title: "About", route: "/about" },
 ];
 const Header: FC = ({}) => {
