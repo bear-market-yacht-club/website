@@ -49,7 +49,7 @@ const Mint: NextPage = () => {
           />
         </div>
         <Heading>
-          <span className="text-yellow">Minting Paused</span>
+          <span className="text-yellow">Minting November 10</span>
         </Heading>
         <div>Enter your email to get notified of any updates</div>
         <div className="flex gap-4 text-xl">

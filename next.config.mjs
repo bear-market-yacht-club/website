@@ -16,17 +16,17 @@ export default defineNextConfig(
   withAxiom({
     reactStrictMode: true,
     swcMinify: true,
-    redirects: () => [
-      {
-        source: "/apply",
-        destination: "https://www.premint.xyz/bear-market-yacht-club/",
-        permanent: true,
-      },
-      {
-        source: "/rsvp",
-        destination: "https://www.premint.xyz/bear-market-yacht-club/",
-        permanent: true,
-      },
-    ],
+    // redirects: () => [
+    //   {
+    //     source: "/apply",
+    //     destination: "https://www.premint.xyz/bear-market-yacht-club/",
+    //     permanent: true,
+    //   },
+    //   {
+    //     source: "/rsvp",
+    //     destination: "https://www.premint.xyz/bear-market-yacht-club/",
+    //     permanent: true,
+    //   },
+    // ],
   })
 );

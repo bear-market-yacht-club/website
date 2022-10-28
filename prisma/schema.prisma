@@ -23,6 +23,7 @@ model ApplicationForm {
     discordHandle       String   @unique @db.Text
     ethAddress          String?  @unique @db.Text
     dateTime            DateTime @default(now())
+    email               String?  @unique @db.Text
 }
 
 model AcceptedTwitterAccounts {

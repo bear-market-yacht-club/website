@@ -1,10 +1,11 @@
 import { z } from "zod";
 
-export const applyValidator = z.object({
-  whyDoYouWantToJoin: z.string().trim().min(10).nullable(),
-  twitterHandle: z.string().trim().min(1),
+export const discordHandleValidator = z.object({
   discordHandle: z.string().trim().min(1),
-  ethAddress: z.string().trim().startsWith("0x").length(42).optional(),
+});
+
+export const twitterHandleValidator = z.object({
+  twitterHandle: z.string().trim().min(1),
 });
 
 export const addressValidator = z.object({
@@ -47,3 +48,12 @@ export const muteValidator = z.object({
   twitter_handle: z.string().trim().min(1),
   muted: z.boolean(),
 });
+
+export const applyValidator = z
+  .object({
+    whyDoYouWantToJoin: z.string().trim().min(10).nullable(),
+  })
+  .merge(discordHandleValidator)
+  .merge(twitterHandleValidator)
+  .merge(addressValidator)
+  .merge(emailValidator);

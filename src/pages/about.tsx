@@ -45,22 +45,20 @@ const About: NextPage = () => {
           exclusive club member areas.
         </p>
         <Heading>Mint Info</Heading>
-        <div className="w-full mb-8 flex gap-4">
-          <div className="flex-grow w-full font-bold text-yellow">
+        <div className="w-full md:w-2/3 mb-8 flex gap-4">
+          <div className="flex-grow font-bold text-yellow">
             <p>Supply</p>
             <p>Network</p>
             <p>Mint Price</p>
-            <p>Max Mint Per Tx</p>
-            <p>Free Mint Per Whitelist</p>
+            <p>Mints Per Whitelist</p>
             <p>Mint Date</p>
           </div>
           <div className="">
             <p>5555</p>
             <p>Ethereum</p>
-            <p>0.06 ETH</p>
-            <p>10</p>
-            <p>1</p>
-            <p>October 26, 2022 2PM EST</p>
+            <p>FREE, Whitelist only</p>
+            <p>3</p>
+            <p>November 10</p>
           </div>
         </div>
         <Heading>Crew Members</Heading>
