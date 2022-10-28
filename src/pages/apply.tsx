@@ -135,7 +135,7 @@ const Apply: NextPage = () => {
                     Connect to Wallet
                   </Button>
                   <p className="text-red-500 text-base">
-                    {errors.twitterHandle && "Required"}
+                    {errors.ethAddress && "Required"}
                   </p>
                 </div>
               )}
