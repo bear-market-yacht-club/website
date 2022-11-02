@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
@@ -48,8 +49,8 @@ const Mint: NextPage = () => {
             alt="bears preview"
           />
         </div>
-        <Heading>
-          <span className="text-yellow">Minting November 10</span>
+        <Heading className="mb-1">
+          <span className="text-yellow">Minting November 10</span>
         </Heading>
         <div>Enter your email to get notified of any updates</div>
         <div className="flex gap-4 text-xl">
@@ -68,6 +69,16 @@ const Mint: NextPage = () => {
         </div>
         {emailStatus === "error" && <div>Invalid Email</div>}
         {emailStatus === "success" && <div>Submitted</div>}
+        <a
+          className="mt-4"
+          href="https://www.premint.xyz/bmyc"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Button>
+            <span className="!no-underline">Whitelist</span>
+          </Button>
+        </a>
       </div>
     </Layout>
   );

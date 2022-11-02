@@ -1,6 +1,6 @@
 import { useEthers } from "@usedapp/core";
 import { NextPage } from "next";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import Button from "../components/Button";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
