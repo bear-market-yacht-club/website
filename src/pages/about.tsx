@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
 
@@ -24,12 +25,14 @@ const team: { username: string; description: string }[] = [
     description: "Vibes Officer",
   },
   {
-    username: "0xBIGBAD",
-    description: "Memeologist",
+    username: "moresmarter_",
+    description: "More Smarter",
   },
 ];
 
 const About: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Layout>
       <Heading>Our Mission</Heading>
@@ -64,7 +67,15 @@ const About: NextPage = () => {
         <Heading>Crew Members</Heading>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 auto-cols-max content-start lg:w-max font-bold mb-7 gap-4">
           {team.map((member, i) => (
-            <div key={i} className="flex flex-col items-center justify-start">
+            <div
+              key={i}
+              className="flex flex-col items-center justify-start cursor-pointer"
+              onClick={() =>
+                window
+                  .open(`https://twitter.com/${member.username}`, "_blank")
+                  ?.focus()
+              }
+            >
               <p className="card">
                 <div className="mx-auto w-[100px] h-[100px] relative">
                   <div className="absolute bottom-1 w-full h-full glow [mask:url('/images/bear-silhouette.png')]"></div>
