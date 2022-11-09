@@ -83,6 +83,10 @@ model whitelists {
     address             String @id
 }
 
+model whitelists_current_holders {
+    address             String @id
+}
+
 model mailing_list {
     email           String @id
     signup_date     DateTime @default(now())
