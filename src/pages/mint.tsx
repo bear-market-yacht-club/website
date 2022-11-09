@@ -8,7 +8,7 @@ import Button from "../components/Button";
 import Checkbox from "../components/Checkbox";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
-import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks";
+import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks/bmyc";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
 import { log } from "next-axiom";
@@ -41,7 +41,6 @@ const Mint: NextPage = () => {
   ]);
   const [isMintTime, setMintTime] = useState(false);
   const isWhitelistUsed = useIsWhitelistUsed(account);
-  console.log({ isWhitelistUsed });
   const totalSupply = useTotalSupply();
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
@@ -61,7 +60,7 @@ const Mint: NextPage = () => {
   if (mintData) {
     ({ merkleProof, whitelisted } = mintData);
   }
-  const mintTimeUTC = new Date("2022-11-10T20:50:00Z");
+  const mintTimeUTC = new Date("2022-11-10T21:20:00Z");
   const isHolderMintTime =
     !isMintTime &&
     whitelistedHolder &&
@@ -117,7 +116,7 @@ const Mint: NextPage = () => {
         gasLimit: 200000,
       }
     );
-    console.log(tx);
+    log.debug(JSON.stringify(tx));
   };
 
   const onQuantityChange = (value: ChangeEvent<HTMLInputElement>) => {
@@ -177,12 +176,12 @@ const Mint: NextPage = () => {
           {(whitelisted || whitelistedHolder) && !isWhitelistUsed ? (
             <p>You have been whitelisted!</p>
           ) : isWhitelistUsed ? (
-            <p>You have already claimed your free mint</p>
+            <p>You have already claimed your mint</p>
           ) : (
-            <></>
+            <>You have not been whitelisted</>
           )}
         </div>
-        {isMintTime || isHolderMintTime ? (
+        {(isMintTime || isHolderMintTime) && !isWhitelistUsed ? (
           <div className="flex flex-col items-center gap-4">
             <div>
               <Checkbox
@@ -244,8 +243,7 @@ const Mint: NextPage = () => {
                   onClick={onMint}
                   disabled={
                     !agreed ||
-                    // TODO:
-                    // chainId !== Mainnet.chainId ||
+                    chainId !== Mainnet.chainId ||
                     (isHolderMintTime && !whitelistedHolder) ||
                     (isMintTime && !whitelisted)
                   }
@@ -338,7 +336,9 @@ const Mint: NextPage = () => {
                 target="_blank"
                 href={`https://twitter.com/intent/tweet?text=I just minted ${quantity} bear${
                   quantity > 1 ? "s" : ""
-                }!! Mint is live @ bmyc.io/mint! 🐻 @BearMarketYC`}
+                }!! Mint is live ${
+                  isHolderMintTime ? "for previous holders " : ""
+                }@ bmyc.io/mint! 🐻 @BearMarketYC`}
               >
                 <Button>Tweet</Button>
               </a>

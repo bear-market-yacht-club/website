@@ -32,7 +32,6 @@ export function useIsWhitelistUsed(
         args: [address],
       }
     ) ?? {};
-  console.log(address, value, error);
   if (error) {
     console.error(error.message);
     return undefined;
