@@ -23,7 +23,6 @@ const pages = [
   { title: "Gallery", route: "/gallery" },
   { title: "Bemes", route: "/bemes" },
   { title: "Newsletter", route: "https://www.getrevue.co/profile/0xmemepool" },
-  { title: "Apply", route: "/apply" },
   { title: "Mint", route: "/mint" },
   { title: "Club Schedule", route: "/roadmap" },
   { title: "About", route: "/about" },
