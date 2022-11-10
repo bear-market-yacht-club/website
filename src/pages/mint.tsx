@@ -71,7 +71,15 @@ const Mint: NextPage = () => {
     compareAsc(mintTimeUTC, add(new Date(), { minutes: 30 })) === -1;
 
   useEffect(() => {
-    log.debug(JSON.stringify({ account, whitelisted }));
+    log.debug(
+      JSON.stringify({
+        account,
+        whitelisted,
+        merkleProof,
+        whitelistedHolder,
+        merkleProofHolder,
+      })
+    );
   }, [account, whitelisted]);
 
   useEffect(() => {
