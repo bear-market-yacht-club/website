@@ -3,9 +3,7 @@ import { useContractFunction, useCall } from "@usedapp/core";
 import BMYC_ABI from "../abis/BMYC.json";
 
 const bmyc = new Contract(
-  process.env.NODE_ENV === "production"
-    ? "0xc6c0fA2D228d1d5FF483f410704A0913782ae9d7"
-    : "0xAA7Bd578Ade85827487877904888Af1C75Ce7BEe",
+  "0xc6c0fA2D228d1d5FF483f410704A0913782ae9d7",
   BMYC_ABI
 );
 

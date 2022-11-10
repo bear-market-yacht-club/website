@@ -16,11 +16,9 @@ import * as gtag from "../types/gtag";
 import "react-responsive-modal/styles.css";
 
 const DAppConfig: Config = {
-  readOnlyChainId:
-    process.env.NODE_ENV === "production" ? Mainnet.chainId : Polygon.chainId,
+  readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
     [Mainnet.chainId]: process.env.MAINNET_RPC!,
-    [Polygon.chainId]: "https://polygon-rpc.com",
   },
 };
 
