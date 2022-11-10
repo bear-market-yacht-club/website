@@ -45,7 +45,6 @@ const Mint: NextPage = () => {
     freeWhitelistMints - (usedWhitelist ?? 0)
   );
   const totalSupply = useTotalSupply();
-  console.log(totalSupply);
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
   const emailRef = useRef<HTMLInputElement>(null);
@@ -153,7 +152,6 @@ const Mint: NextPage = () => {
       });
     }
   };
-  console.log(process.env.ma);
 
   return (
     <Layout>
