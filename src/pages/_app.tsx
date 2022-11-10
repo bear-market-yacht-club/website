@@ -19,8 +19,7 @@ const DAppConfig: Config = {
   readOnlyChainId:
     process.env.NODE_ENV === "production" ? Mainnet.chainId : Polygon.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]:
-      "https://mainnet.infura.io/v3/b04d2052bb564fe1b7013bd024f9c8ba",
+    [Mainnet.chainId]: process.env.MAINNET_RPC!,
     [Polygon.chainId]: "https://polygon-rpc.com",
   },
 };
