@@ -45,6 +45,7 @@ const Mint: NextPage = () => {
     freeWhitelistMints - (usedWhitelist ?? 0)
   );
   const totalSupply = useTotalSupply();
+  console.log(totalSupply);
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
   const emailRef = useRef<HTMLInputElement>(null);
@@ -185,9 +186,7 @@ const Mint: NextPage = () => {
           </div>
         ) : (
           <div className="-mt-12 md:-mt-8 scale-50 gap-12 md:scale-100 flex">
-            <div className="font-black text-8xl md:text-5xl">
-              {totalSupply ?? 0} / 5555
-            </div>
+            <div className="font-black text-8xl md:text-5xl">1809 / 5555</div>
           </div>
         )}
         <div className="md:mt-4 flex flex-col gap-4 justify-between items-center text-center">

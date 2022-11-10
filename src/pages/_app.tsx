@@ -2,7 +2,7 @@
 import { httpBatchLink } from "@trpc/client/links/httpBatchLink";
 import { loggerLink } from "@trpc/client/links/loggerLink";
 import { withTRPC } from "@trpc/next";
-import { Config, DAppProvider, Mainnet, Polygon } from "@usedapp/core";
+import { Config, DAppProvider, Mainnet } from "@usedapp/core";
 import { SessionProvider } from "next-auth/react";
 import type { AppType } from "next/dist/shared/lib/utils";
 import Head from "next/head";
