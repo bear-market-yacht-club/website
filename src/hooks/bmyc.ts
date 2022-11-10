@@ -3,7 +3,9 @@ import { useContractFunction, useCall } from "@usedapp/core";
 import BMYC_ABI from "../abis/BMYC.json";
 
 const bmyc = new Contract(
-  "0xAA7Bd578Ade85827487877904888Af1C75Ce7BEe",
+  process.env.NODE_ENV === "production"
+    ? "0xc6c0fA2D228d1d5FF483f410704A0913782ae9d7"
+    : "0xAA7Bd578Ade85827487877904888Af1C75Ce7BEe",
   BMYC_ABI
 );
 
@@ -23,7 +25,7 @@ export function useTotalSupply(): number | undefined {
 
 export function useIsWhitelistUsed(
   address: string | undefined
-): boolean | undefined {
+): number | undefined {
   const { value, error } =
     useCall(
       address && {
@@ -36,7 +38,7 @@ export function useIsWhitelistUsed(
     console.error(error.message);
     return undefined;
   }
-  return value?.[0];
+  return value ? (value[0] as BigNumber).toNumber() : undefined;
 }
 
 export function useBMYCMethod(methodName: string) {

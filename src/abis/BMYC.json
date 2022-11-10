@@ -35,6 +35,17 @@
     "type": "error"
   },
   {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "operator",
+        "type": "address"
+      }
+    ],
+    "name": "OperatorNotAllowed",
+    "type": "error"
+  },
+  {
     "inputs": [],
     "name": "OwnerQueryForNonexistentToken",
     "type": "error"
@@ -286,6 +297,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "__OperatorFilterer_init",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address[]",
@@ -417,6 +435,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "initialize2",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -531,6 +556,25 @@
         "type": "address"
       }
     ],
+    "name": "s_used_whitelist_count",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
     "name": "s_used_whitelists",
     "outputs": [
       {
@@ -584,7 +628,7 @@
       },
       {
         "internalType": "bytes",
-        "name": "_data",
+        "name": "data",
         "type": "bytes"
       }
     ],
@@ -736,9 +780,9 @@
     "name": "usedWhitelist",
     "outputs": [
       {
-        "internalType": "bool",
+        "internalType": "uint256",
         "name": "",
-        "type": "bool"
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",

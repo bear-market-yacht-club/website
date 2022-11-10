@@ -29,7 +29,6 @@ const Mint: NextPage = () => {
   const [agreed, setAgreed] = useState(false);
   const [mintDuration, setMintDuration] = useState<Duration>();
   const freeWhitelistMints = 3;
-  const [quantity, setQuantity] = useState(freeWhitelistMints);
   const { send, state } = useMint();
   const { data: mintDataHolder } = trpc.useQuery([
     "mint.merkle-proof-holder",
@@ -40,7 +39,11 @@ const Mint: NextPage = () => {
     { ethAddress: account || "0x" },
   ]);
   const [isMintTime, setMintTime] = useState(false);
-  const isWhitelistUsed = useIsWhitelistUsed(account);
+  const usedWhitelist = useIsWhitelistUsed(account);
+  const isWhitelistUsed = (usedWhitelist ?? 0) > freeWhitelistMints;
+  const [quantity, setQuantity] = useState(
+    freeWhitelistMints - (usedWhitelist ?? 0)
+  );
   const totalSupply = useTotalSupply();
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
@@ -70,6 +73,10 @@ const Mint: NextPage = () => {
   useEffect(() => {
     log.debug(JSON.stringify({ account, whitelisted }));
   }, [account, whitelisted]);
+
+  useEffect(() => {
+    setQuantity(freeWhitelistMints - (usedWhitelist ?? 0));
+  }, [usedWhitelist]);
 
   useEffect(() => {
     const setDuration = () => {
@@ -122,7 +129,10 @@ const Mint: NextPage = () => {
   const onQuantityChange = (value: ChangeEvent<HTMLInputElement>) => {
     let newQuantity = parseInt(value.currentTarget.value) || 0;
     newQuantity = Math.max(1, newQuantity);
-    newQuantity = Math.min(freeWhitelistMints, newQuantity);
+    newQuantity = Math.min(
+      freeWhitelistMints - (usedWhitelist ?? 0),
+      newQuantity
+    );
     setQuantity(newQuantity);
   };
 
@@ -212,7 +222,10 @@ const Mint: NextPage = () => {
                       className="flex-grow cursor-pointer"
                       onClick={() =>
                         setQuantity((prev) =>
-                          Math.min(freeWhitelistMints, prev + 1)
+                          Math.min(
+                            freeWhitelistMints - (usedWhitelist ?? 0),
+                            prev + 1
+                          )
                         )
                       }
                       xmlns="http://www.w3.org/2000/svg"
