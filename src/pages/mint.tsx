@@ -183,7 +183,9 @@ const Mint: NextPage = () => {
           </div>
         )}
         <div className="md:mt-4 flex flex-col gap-4 justify-between items-center text-center">
-          {(whitelisted || whitelistedHolder) && !isWhitelistUsed ? (
+          {!account ? (
+            <p>Connect your wallet to see if you&apos;re whitelisted</p>
+          ) : (whitelisted || whitelistedHolder) && !isWhitelistUsed ? (
             <p>You have been whitelisted!</p>
           ) : isWhitelistUsed ? (
             <p>You have already claimed your mint</p>
