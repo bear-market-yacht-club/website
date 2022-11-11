@@ -21,14 +21,12 @@ export function useTotalSupply(): number | undefined {
   return value ? (value[0] as BigNumber).toNumber() : undefined;
 }
 
-export function useIsWhitelistUsed(
-  address: string | undefined
-): number | undefined {
+export function useIsMintUsed(address: string | undefined): number | undefined {
   const { value, error } =
     useCall(
       address && {
         contract: bmyc,
-        method: "usedWhitelist",
+        method: "usedMint",
         args: [address],
       }
     ) ?? {};

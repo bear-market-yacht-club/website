@@ -47,21 +47,21 @@ const About: NextPage = () => {
           Your bear is your yacht club access pass, and provides access to all
           exclusive club member areas.
         </p>
-        <Heading>Mint Info</Heading>
+        <Heading>Public Mint Info</Heading>
         <div className="w-full md:w-2/3 mb-8 flex gap-4">
           <div className="flex-grow font-bold text-yellow">
             <p>Supply</p>
             <p>Network</p>
             <p>Mint Price</p>
-            <p>Mints Per Whitelist</p>
+            <p>Mints Per Wallet</p>
             <p>Mint Date</p>
           </div>
           <div className="">
             <p>5555</p>
             <p>Ethereum</p>
-            <p>FREE, Whitelist only</p>
+            <p>FREE</p>
             <p>3</p>
-            <p>November 10</p>
+            <p>November 10, 4:20PM EST</p>
           </div>
         </div>
         <Heading>Crew Members</Heading>

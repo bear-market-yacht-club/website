@@ -772,7 +772,7 @@
         "type": "address"
       }
     ],
-    "name": "usedWhitelist",
+    "name": "usedMint",
     "outputs": [
       {
         "internalType": "uint256",

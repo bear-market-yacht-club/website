@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import Checkbox from "../components/Checkbox";
 import Heading from "../components/Heading";
 import Layout from "../components/Layout";
-import { useIsWhitelistUsed, useMint, useTotalSupply } from "../hooks/bmyc";
+import { useIsMintUsed, useMint, useTotalSupply } from "../hooks/bmyc";
 import { trpc } from "../utils/trpc";
 import { Modal } from "react-responsive-modal";
 import { log } from "next-axiom";
@@ -17,13 +17,11 @@ const Mint: NextPage = () => {
   const router = useRouter();
   const { account, chainId } = useEthers();
   const [agreed, setAgreed] = useState(false);
-  const freeWhitelistMints = 3;
+  const freeMints = 3;
   const { send, state } = useMint();
-  const usedWhitelist = useIsWhitelistUsed(account);
-  const isWhitelistUsed = (usedWhitelist ?? 0) > freeWhitelistMints;
-  const [quantity, setQuantity] = useState(
-    freeWhitelistMints - (usedWhitelist ?? 0)
-  );
+  const usedMints = useIsMintUsed(account);
+  const isMintsUsed = (usedMints ?? 0) > freeMints;
+  const [quantity, setQuantity] = useState(freeMints - (usedMints ?? 0));
   const totalSupply = useTotalSupply();
   const { mutate: addEmail, status: emailStatus } =
     trpc.useMutation("mailing.addEmail");
@@ -41,8 +39,8 @@ const Mint: NextPage = () => {
   }, [account]);
 
   useEffect(() => {
-    setQuantity(freeWhitelistMints - (usedWhitelist ?? 0));
-  }, [usedWhitelist]);
+    setQuantity(freeMints - (usedMints ?? 0));
+  }, [usedMints]);
 
   useEffect(() => {
     const th = localStorage
@@ -72,10 +70,7 @@ const Mint: NextPage = () => {
   const onQuantityChange = (value: ChangeEvent<HTMLInputElement>) => {
     let newQuantity = parseInt(value.currentTarget.value) || 0;
     newQuantity = Math.max(1, newQuantity);
-    newQuantity = Math.min(
-      freeWhitelistMints - (usedWhitelist ?? 0),
-      newQuantity
-    );
+    newQuantity = Math.min(freeMints - (usedMints ?? 0), newQuantity);
     setQuantity(newQuantity);
   };
 
@@ -109,7 +104,7 @@ const Mint: NextPage = () => {
           </div>
         </div>
         <div className="md:mt-4 flex flex-col gap-4 justify-between items-center text-center">
-          {isWhitelistUsed && <p>You have already claimed your mint</p>}
+          {isMintsUsed && <p>You have already claimed your mint</p>}
         </div>
 
         <div className="flex flex-col items-center gap-4">
@@ -132,7 +127,7 @@ const Mint: NextPage = () => {
                 <input
                   className="bg-black border-b-yellow border-b-2 w-12 text-3xl text-center"
                   min={1}
-                  max={freeWhitelistMints}
+                  max={freeMints}
                   value={quantity}
                   type="number"
                   onChange={onQuantityChange}
@@ -142,10 +137,7 @@ const Mint: NextPage = () => {
                     className="flex-grow cursor-pointer"
                     onClick={() =>
                       setQuantity((prev) =>
-                        Math.min(
-                          freeWhitelistMints - (usedWhitelist ?? 0),
-                          prev + 1
-                        )
+                        Math.min(freeMints - (usedMints ?? 0), prev + 1)
                       )
                     }
                     xmlns="http://www.w3.org/2000/svg"
