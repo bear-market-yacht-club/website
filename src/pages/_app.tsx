@@ -18,8 +18,7 @@ import "react-responsive-modal/styles.css";
 const DAppConfig: Config = {
   readOnlyChainId: Mainnet.chainId,
   readOnlyUrls: {
-    [Mainnet.chainId]:
-      "https://eth-mainnet.g.alchemy.com/v2/X9kM7vo0ajbmIYuaQ1w537f__MO7abfV",
+    [Mainnet.chainId]: "https://rpc.ankr.com/eth",
   },
 };
 
